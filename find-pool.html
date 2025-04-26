@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PoolMate - Find Pool</title>
+    <title>Pool Mate - Find Your Perfect Ride</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="find-pool.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Find and book shared rides with Pool Mate - the smart carpooling platform">
 </head>
 <body class="light-mode">
     <div class="page-container">
@@ -19,7 +20,7 @@
                     <path d="M16 2C8.268 2 2 8.268 2 16C2 23.732 8.268 30 16 30C23.732 30 30 23.732 30 16C30 8.268 23.732 2 16 2Z" fill="var(--accent-color)" fill-opacity="0.2"/>
                     <path d="M16 6C10.477 6 6 10.477 6 16C6 21.523 10.477 26 16 26C21.523 26 26 21.523 26 16C26 10.477 21.523 6 16 6ZM16 22C12.686 22 10 19.314 10 16C10 12.686 12.686 10 16 10C19.314 10 22 12.686 22 16C22 19.314 19.314 22 16 22Z" fill="var(--accent-color)"/>
                 </svg>
-                <span>PoolMate</span>
+                <span>Pool<strong>Mate</strong></span>
             </div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
@@ -62,7 +63,10 @@
 
         <!-- Main Content -->
         <main class="find-pool-container">
-            <h1 class="page-title">Find a Pool</h1>
+            <div class="page-header">
+                <h1 class="page-title">Find Your Perfect Ride</h1>
+                <p class="page-subtitle">Search, compare and book shared rides in just a few clicks</p>
+            </div>
             
             <!-- Progress Timeline -->
             <div class="progress-timeline">
@@ -105,12 +109,12 @@
                         <div class="form-group">
                             <label for="pickup-location">Pickup Location</label>
                             <div class="input-wrapper">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                                <input type="text" id="pickup-location" placeholder="Enter pickup location">
-                                <button type="button" id="current-location" class="current-location-btn" title="Use current location">
+                                <input type="text" id="pickup-location" placeholder="Enter pickup location" autocomplete="off">
+                                <button type="button" id="current-location" class="current-location-btn" title="Use current location" aria-label="Use current location">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         <path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -123,16 +127,22 @@
                                         <path d="M19.07 4.93L17.66 6.34" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     </svg>
                                 </button>
+                                <div class="location-suggestions" id="pickup-suggestions">
+                                    <!-- Suggestions will be added dynamically -->
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="drop-location">Drop Location</label>
                             <div class="input-wrapper">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                                <input type="text" id="drop-location" placeholder="Enter drop location">
+                                <input type="text" id="drop-location" placeholder="Enter drop location" autocomplete="off">
+                                <div class="location-suggestions" id="drop-suggestions">
+                                    <!-- Suggestions will be added dynamically -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -140,7 +150,7 @@
                         <div class="form-group">
                             <label for="travel-date">Date</label>
                             <div class="input-wrapper">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -152,7 +162,7 @@
                         <div class="form-group">
                             <label for="travel-time">Time</label>
                             <div class="input-wrapper">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
@@ -169,7 +179,7 @@
 
                     <div class="filters-container">
                         <div class="filters-header">
-                            <h3>Filters</h3>
+                            <h3>Advanced Filters</h3>
                             <button type="button" id="toggle-filters" class="toggle-filters-btn">
                                 <span>Show Filters</span>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +190,7 @@
                         
                         <div class="filters-content">
                             <div class="filter-group">
-                                <label for="price-range">Price Range (₹)</label>
+                                <label for="price-range">Maximum Price (₹)</label>
                                 <div class="range-slider-container">
                                     <input type="range" id="price-range" min="0" max="2000" step="50" value="1000">
                                     <div class="range-values">
@@ -191,47 +201,68 @@
                                 </div>
                             </div>
                             
-                            <div class="filter-group checkbox-filters">
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="verified-driver">
-                                    <label for="verified-driver">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
-                                        </svg>
-                                        Verified Driver
-                                    </label>
+                            <div class="filter-group">
+                                <label>Preferences</label>
+                                <div class="checkbox-filters">
+                                    <div class="checkbox-filter">
+                                        <input type="checkbox" id="verified-driver">
+                                        <label for="verified-driver">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+                                            </svg>
+                                            Verified Driver
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-filter">
+                                        <input type="checkbox" id="highly-rated">
+                                        <label for="highly-rated">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            Highly Rated (4.5+)
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-filter">
+                                        <input type="checkbox" id="ladies-only">
+                                        <label for="ladies-only">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 2C13.1046 2 14 2.89543 14 4C14 5.10457 13.1046 6 12 6C10.8954 6 10 5.10457 10 4C10 2.89543 10.8954 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M12 6V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M9 18C9 19.6569 10.3431 21 12 21C13.6569 21 15 19.6569 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            Ladies Only
+                                        </label>
+                                    </div>
+                                    <div class="checkbox-filter">
+                                        <input type="checkbox" id="ac-vehicle">
+                                        <label for="ac-vehicle">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M12 5L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
+                                            </svg>
+                                            AC Vehicle
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="highly-rated">
-                                    <label for="highly-rated">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                        Highly Rated (4.5+)
-                                    </label>
-                                </div>
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="ladies-only">
-                                    <label for="ladies-only">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M12 2C13.1046 2 14 2.89543 14 4C14 5.10457 13.1046 6 12 6C10.8954 6 10 5.10457 10 4C10 2.89543 10.8954 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M12 6V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M9 18C9 19.6569 10.3431 21 12 21C13.6569 21 15 19.6569 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                        Ladies Only
-                                    </label>
-                                </div>
-                                <div class="checkbox-filter">
-                                    <input type="checkbox" id="ac-vehicle">
-                                    <label for="ac-vehicle">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M12 5L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
-                                        </svg>
-                                        AC Vehicle
-                                    </label>
+                            </div>
+
+                            <div class="filter-group">
+                                <label>Sort By</label>
+                                <div class="sort-options">
+                                    <div class="radio-filter">
+                                        <input type="radio" id="sort-price" name="sort-by" value="price" checked>
+                                        <label for="sort-price">Price (Low to High)</label>
+                                    </div>
+                                    <div class="radio-filter">
+                                        <input type="radio" id="sort-rating" name="sort-by" value="rating">
+                                        <label for="sort-rating">Rating (High to Low)</label>
+                                    </div>
+                                    <div class="radio-filter">
+                                        <input type="radio" id="sort-departure" name="sort-by" value="departure">
+                                        <label for="sort-departure">Departure Time</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +273,7 @@
                             <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        Search Pool
+                        Find Rides
                     </button>
                 </form>
             </div>
@@ -250,7 +281,10 @@
             <!-- Results Section (Initially Hidden) -->
             <div id="results-section" class="results-section hidden">
                 <div class="results-header">
-                    <h2>Available Pools</h2>
+                    <div class="results-info">
+                        <h2>Available Rides</h2>
+                        <p class="results-count"><span id="results-count">0</span> rides found</p>
+                    </div>
                     <div class="view-toggle">
                         <button id="list-view-btn" class="view-toggle-btn active">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -319,8 +353,27 @@
                         </div>
                         <div id="map-list-view" class="map-list-view">
                             <!-- Selected pool details will appear here -->
+                            <div class="map-info-empty">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <p>Select a pin on the map to view ride details</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- No Results State -->
+                <div id="no-results" class="no-results hidden">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 11H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>No rides found</h3>
+                    <p>Try adjusting your search criteria or try a different date/time</p>
+                    <button class="button secondary" id="modify-search-btn">Modify Search</button>
                 </div>
             </div>
 
@@ -328,8 +381,8 @@
             <div id="pool-details-modal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3>Pool Details</h3>
-                        <button class="close-modal">
+                        <h3>Ride Details</h3>
+                        <button class="close-modal" aria-label="Close modal">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -338,6 +391,38 @@
                     </div>
                     <div class="modal-body">
                         <!-- Pool details will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Success Modal -->
+            <div id="booking-success-modal" class="modal">
+                <div class="modal-content success-modal">
+                    <div class="success-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3>Booking Successful!</h3>
+                    <p>Your ride has been booked successfully. You will receive a confirmation email shortly.</p>
+                    <div class="booking-details">
+                        <div class="booking-detail">
+                            <span>Booking ID</span>
+                            <strong>PM-12345</strong>
+                        </div>
+                        <div class="booking-detail">
+                            <span>Date & Time</span>
+                            <strong id="booking-datetime">26 Apr, 2023 - 09:30 AM</strong>
+                        </div>
+                        <div class="booking-detail">
+                            <span>Amount Paid</span>
+                            <strong id="booking-amount">₹180</strong>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="button secondary" id="view-bookings-btn">View My Bookings</button>
+                        <button class="button primary" id="close-success-modal">Done</button>
                     </div>
                 </div>
             </div>
@@ -351,7 +436,7 @@
                         <path d="M16 2C8.268 2 2 8.268 2 16C2 23.732 8.268 30 16 30C23.732 30 30 23.732 30 16C30 8.268 23.732 2 16 2Z" fill="var(--accent-color)" fill-opacity="0.2"/>
                         <path d="M16 6C10.477 6 6 10.477 6 16C6 21.523 10.477 26 16 26C21.523 26 26 21.523 26 16C26 10.477 21.523 6 16 6ZM16 22C12.686 22 10 19.314 10 16C10 12.686 12.686 10 16 10C19.314 10 22 12.686 22 16C22 19.314 19.314 22 16 22Z" fill="var(--accent-color)"/>
                     </svg>
-                    <span>PoolMate</span>
+                    <span>Pool<strong>Mate</strong></span>
                 </div>
                 <div class="footer-links">
                     <div class="footer-column">
