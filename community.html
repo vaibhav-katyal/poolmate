@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Pooling Platform</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="community.css">
+</head>
+<body>
+  <!-- 3D Animated Background -->
+  <div class="background">
+    <div class="gradient-sphere sphere-1"></div>
+    <div class="gradient-sphere sphere-2"></div>
+    <div class="gradient-sphere sphere-3"></div>
+    <div class="particles"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <!-- Floating Navigation -->
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <!-- <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1 class="glowing-text">Community-Based <span class="gradient-text">Pooling</span></h1>
+        <p class="subtitle">Connect with verified communities for safer, smarter rides</p>
+        <div class="cta-buttons">
+          <button class="primary-btn get-started-btn" id="getStartedBtn">
+            <span>Get Started</span>
+            <div class="btn-glow"></div>
+          </button>
+          <button class="secondary-btn learn-more-btn">
+            <span>Learn More</span>
+          </button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="floating-card community-card">
+          <div class="card-icon university-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3L1 9L5 11.18V17.18L12 21L19 17.18V11.18L21 10.09V17H23V9L12 3ZM18.82 9L12 12.72L5.18 9L12 5.28L18.82 9ZM17 15.99L12 18.72L7 15.99V12.27L12 15L17 12.27V15.99Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>University</h3>
+          <p>Connect with students and faculty</p>
+          <div class="card-glow"></div>
+        </div>
+        <div class="floating-card company-card">
+          <div class="card-icon company-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 7V3H2V21H22V7H12ZM6 19H4V17H6V19ZM6 15H4V13H6V15ZM6 11H4V9H6V11ZM6 7H4V5H6V7ZM10 19H8V17H10V19ZM10 15H8V13H10V15ZM10 11H8V9H10V11ZM10 7H8V5H10V7ZM20 19H12V17H14V15H12V13H14V11H12V9H20V19ZM18 11H16V13H18V11ZM18 15H16V17H18V15Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>Company</h3>
+          <p>Share rides with colleagues</p>
+          <div class="card-glow"></div>
+        </div>
+        <div class="floating-card public-card">
+          <div class="card-icon public-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11 7H13V9H11V7ZM11 11H13V17H11V11Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>General Public</h3>
+          <p>Open to everyone</p>
+          <div class="card-glow"></div>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- Community Selection Section -->
+    <section class="community-selection" id="communitySelection">
+      <h2 class="section-title">Select Your <span class="gradient-text">Community</span></h2>
+      <p class="section-subtitle">Choose the community you belong to for verification</p>
+      
+      <div class="community-cards">
+        <div class="community-card" data-community="university">
+          <div class="card-content">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3L1 9L5 11.18V17.18L12 21L19 17.18V11.18L21 10.09V17H23V9L12 3ZM18.82 9L12 12.72L5.18 9L12 5.28L18.82 9ZM17 15.99L12 18.72L7 15.99V12.27L12 15L17 12.27V15.99Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>University</h3>
+            <p>Connect with students and faculty from your university</p>
+            <div class="verification-method">
+              <span>Verification via:</span>
+              <div class="method-icons">
+                <div class="method-icon" title="Email Verification">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="method-icon" title="ID Upload">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM12 12C13.65 12 15 10.65 15 9C15 7.35 13.65 6 12 6C10.35 6 9 7.35 9 9C9 10.65 10.35 12 12 12ZM12 8C12.55 8 13 8.45 13 9C13 9.55 12.55 10 12 10C11.45 10 11 9.55 11 9C11 8.45 11.45 8 12 8ZM18 18H6V16.47C6 13.97 9.97 12.89 12 12.89C14.03 12.89 18 13.97 18 16.47V18ZM16.31 16C15.84 15.27 13.61 14.89 12 14.89C10.39 14.89 8.16 15.27 7.69 16H16.31Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <button class="select-btn">Select</button>
+          </div>
+          <div class="card-bg"></div>
+        </div>
+        
+        <div class="community-card" data-community="company">
+          <div class="card-content">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 7V3H2V21H22V7H12ZM6 19H4V17H6V19ZM6 15H4V13H6V15ZM6 11H4V9H6V11ZM6 7H4V5H6V7ZM10 19H8V17H10V19ZM10 15H8V13H10V15ZM10 11H8V9H10V11ZM10 7H8V5H10V7ZM20 19H12V17H14V15H12V13H14V11H12V9H20V19ZM18 11H16V13H18V11ZM18 15H16V17H18V15Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>Company</h3>
+            <p>Share rides with colleagues from your workplace</p>
+            <div class="verification-method">
+              <span>Verification via:</span>
+              <div class="method-icons">
+                <div class="method-icon" title="Email Verification">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="method-icon" title="ID Upload">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM12 12C13.65 12 15 10.65 15 9C15 7.35 13.65 6 12 6C10.35 6 9 7.35 9 9C9 10.65 10.35 12 12 12ZM12 8C12.55 8 13 8.45 13 9C13 9.55 12.55 10 12 10C11.45 10 11 9.55 11 9C11 8.45 11.45 8 12 8ZM18 18H6V16.47C6 13.97 9.97 12.89 12 12.89C14.03 12.89 18 13.97 18 16.47V18ZM16.31 16C15.84 15.27 13.61 14.89 12 14.89C10.39 14.89 8.16 15.27 7.69 16H16.31Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <button class="select-btn">Select</button>
+          </div>
+          <div class="card-bg"></div>
+        </div>
+        
+        <div class="community-card" data-community="public">
+          <div class="card-content">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11 7H13V9H11V7ZM11 11H13V17H11V11Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>General Public</h3>
+            <p>Open to everyone, no specific affiliation required</p>
+            <div class="verification-method">
+              <span>Verification via:</span>
+              <div class="method-icons">
+                <div class="method-icon" title="Basic Verification">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <button class="select-btn">Select</button>
+          </div>
+          <div class="card-bg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification Flow Section -->
+    <section class="verification-flow" id="verificationFlow">
+      <div class="section-header">
+        <h2 class="section-title"><span class="community-name">University</span> <span class="gradient-text">Verification</span></h2>
+        <p class="section-subtitle">Complete verification to access your community features</p>
+      </div>
+      
+      <div class="verification-steps">
+        <div class="verification-step active" id="emailVerification">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Email Verification</h3>
+            <p class="verification-description">Enter your official university email address to verify your affiliation</p>
+            <form class="verification-form">
+              <div class="form-group">
+                <label for="email">University Email Address</label>
+                <div class="input-wrapper">
+                  <input type="email" id="email" placeholder="your@university.edu" required>
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="domain-hint">We accept emails from: .edu, harvard.edu, mit.edu, stanford.edu, etc.</div>
+              </div>
+              <button type="submit" class="primary-btn verify-btn">
+                <span>Verify Email</span>
+                <div class="btn-glow"></div>
+              </button>
+            </form>
+          </div>
+          <div class="step-indicator">
+            <div class="indicator-line"></div>
+            <div class="indicator-dot"></div>
+          </div>
+        </div>
+        
+        <div class="verification-step" id="idVerification">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Student ID Verification</h3>
+            <p class="verification-description">Upload your student ID card to verify your university affiliation</p>
+            <div class="upload-area">
+              <input type="file" id="idDocument" class="file-input" accept="image/*,.pdf">
+              <div class="upload-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4C9.11 4 6.6 5.64 5.35 8.04C2.34 8.36 0 10.91 0 14C0 17.31 2.69 20 6 20H19C21.76 20 24 17.76 24 15C24 12.36 21.95 10.22 19.35 10.04ZM19 18H6C3.79 18 2 16.21 2 14C2 11.95 3.53 10.24 5.56 10.03L6.63 9.92L7.13 8.97C8.08 7.14 9.94 6 12 6C14.62 6 16.88 7.86 17.39 10.43L17.69 11.93L19.22 12.04C20.78 12.14 22 13.45 22 15C22 16.65 20.65 18 19 18ZM8 13H10.55V16H13.45V13H16L12 9L8 13Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="upload-text">
+                <span>Drag & drop your student ID here</span>
+                <span>or</span>
+                <button class="browse-btn">Browse Files</button>
+              </div>
+              <div class="upload-preview hidden">
+                <div class="preview-icon">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6C4.9 2 4.01 2.9 4.01 4L4 20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2ZM16 18H8V16H16V18ZM16 14H8V12H16V14ZM13 9V3.5L18.5 9H13Z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="preview-info">
+                  <span class="file-name">document.pdf</span>
+                  <span class="file-size">2.4 MB</span>
+                </div>
+                <button class="remove-file">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <button class="primary-btn submit-id-btn">
+              <span>Submit for Verification</span>
+              <div class="btn-glow"></div>
+            </button>
+          </div>
+          <div class="step-indicator">
+            <div class="indicator-line"></div>
+            <div class="indicator-dot"></div>
+          </div>
+        </div>
+        
+        <div class="verification-step" id="verificationComplete">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="verification-result success">
+              <div class="result-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <h3>Verification Successful!</h3>
+              <p>You're now verified as part of the <span class="community-name">University</span> community</p>
+              <button class="primary-btn continue-btn">
+                <span>Continue to Campus Rides</span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+            
+            <div class="verification-result error hidden">
+              <div class="result-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM11 15H13V17H11V15ZM11 7H13V13H11V7Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <h3>Verification Failed</h3>
+              <p>We couldn't verify your information. Please try again with a valid university email or ID.</p>
+              <button class="primary-btn retry-btn">
+                <span>Try Again</span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+          </div>
+          <div class="step-indicator">
+            <div class="indicator-line"></div>
+            <div class="indicator-dot"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ride Options Section -->
+    <section class="ride-options" id="rideOptions">
+      <div class="section-header">
+        <h2 class="section-title"><span class="community-name">University</span> <span class="gradient-text">Ride Options</span></h2>
+        <p class="section-subtitle">Find or offer rides within your campus community</p>
+      </div>
+      
+      <div class="options-container">
+        <div class="option-card" id="offerRideCard">
+          <div class="option-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.29 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 16C5.67 16 5 15.33 5 14.5C5 13.67 5.67 13 6.5 13C7.33 13 8 13.67 8 14.5C8 15.33 7.33 16 6.5 16ZM17.5 16C16.67 16 16 15.33 16 14.5C16 13.67 16.67 13 17.5 13C18.33 13 19 13.67 19 14.5C19 15.33 18.33 16 17.5 16ZM5 11L6.5 6.5H17.5L19 11H5Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>Offer a Ride</h3>
+          <p>Share your commute with fellow students and help reduce campus traffic</p>
+          <button class="primary-btn offer-ride-btn">
+            <span>Offer Ride</span>
+            <div class="btn-glow"></div>
+          </button>
+        </div>
+        
+        <div class="option-card" id="findRideCard">
+          <div class="option-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>Find a Ride</h3>
+          <p>Search for available rides to campus locations and events</p>
+          <button class="primary-btn find-ride-btn">
+            <span>Find Ride</span>
+            <div class="btn-glow"></div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ride Creation Section -->
+    <section class="ride-creation" id="rideCreation">
+      <div class="section-header">
+        <h2 class="section-title">Offer a <span class="gradient-text">Campus Ride</span></h2>
+        <p class="section-subtitle">Share your commute with fellow students</p>
+      </div>
+      
+      <div class="ride-creation-container">
+        <div class="ride-form-container">
+          <form class="ride-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="origin">Origin</label>
+                <div class="input-wrapper">
+                  <input type="text" id="origin" placeholder="e.g., North Campus Housing" required>
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="destination">Destination</label>
+                <div class="input-wrapper">
+                  <input type="text" id="destination" placeholder="e.g., Main Campus Library" required>
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="date">Date</label>
+                <div class="input-wrapper">
+                  <input type="date" id="date" required>
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H12V15H7V10Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="time">Time</label>
+                <div class="input-wrapper">
+                  <input type="time" id="time" required>
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Campus Ride Type</label>
+              <div class="match-options">
+                <div class="match-option active" data-match="campus">
+                  <div class="option-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 3L1 9L5 11.18V17.18L12 21L19 17.18V11.18L21 10.09V17H23V9L12 3ZM18.82 9L12 12.72L5.18 9L12 5.28L18.82 9ZM17 15.99L12 18.72L7 15.99V12.27L12 15L17 12.27V15.99Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="option-text">
+                    <h4>Campus Only</h4>
+                    <p>Only students from your university</p>
+                  </div>
+                </div>
+                
+                <div class="match-option" data-match="event">
+                  <div class="option-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H12V15H7V10Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="option-text">
+                    <h4>Campus Event</h4>
+                    <p>For university events and games</p>
+                  </div>
+                </div>
+                
+                <div class="match-option" data-match="public">
+                  <div class="option-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9C13.99 12.9 17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="option-text">
+                    <h4>Open to Public</h4>
+                    <p>Anyone can join your ride</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="seats">Available Seats</label>
+              <div class="input-wrapper">
+                <input type="number" id="seats" min="1" max="8" value="3" required>
+                <div class="input-icon">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 11C17.66 11 19 9.66 19 8C19 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 11 9.66 11 8C11 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V18H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V18H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="notes">Additional Notes</label>
+              <textarea id="notes" rows="3" placeholder="Any details about your ride, pickup locations, etc."></textarea>
+            </div>
+            
+            <button type="submit" class="primary-btn create-ride-btn">
+              <span>Create Campus Ride</span>
+              <div class="btn-glow"></div>
+            </button>
+          </form>
+        </div>
+        
+        <div class="ride-preview">
+          <div class="preview-header">
+            <h3>Ride Preview</h3>
+            <div class="preview-badge">Campus Only</div>
+          </div>
+          <div class="preview-map">
+            <div class="map-placeholder">
+              <div class="map-pin origin-pin">A</div>
+              <div class="map-pin destination-pin">B</div>
+              <div class="map-route"></div>
+            </div>
+          </div>
+          <div class="preview-details">
+            <div class="detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="detail-text">
+                <span class="detail-label">From</span>
+                <span class="detail-value" id="previewOrigin">Enter origin</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="detail-text">
+                <span class="detail-label">To</span>
+                <span class="detail-value" id="previewDestination">Enter destination</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H12V15H7V10Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="detail-text">
+                <span class="detail-label">Date</span>
+                <span class="detail-value" id="previewDate">Select date</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="detail-text">
+                <span class="detail-label">Time</span>
+                <span class="detail-value" id="previewTime">Select time</span>
+              </div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 11C17.66 11 19 9.66 19 8C19 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 11 9.66 11 8C11 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V18H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V18H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="detail-text">
+                <span class="detail-label">Seats</span>
+                <span class="detail-value" id="previewSeats">3 available</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Find Ride Section -->
+    <section class="find-ride" id="findRide">
+      <div class="section-header">
+        <h2 class="section-title">Find <span class="gradient-text">Campus Rides</span></h2>
+        <p class="section-subtitle">Search for available rides to campus locations</p>
+      </div>
+      
+      <div class="search-container">
+        <div class="search-form-container">
+          <form class="search-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="searchOrigin">From</label>
+                <div class="input-wrapper">
+                  <input type="text" id="searchOrigin" placeholder="e.g., Student Housing">
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="searchDestination">To</label>
+                <div class="input-wrapper">
+                  <input type="text" id="searchDestination" placeholder="e.g., Main Campus">
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="searchDate">Date</label>
+                <div class="input-wrapper">
+                  <input type="date" id="searchDate">
+                  <div class="input-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H12V15H7V10Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Ride Type</label>
+                <div class="filter-options">
+                  <label class="filter-option">
+                    <input type="checkbox" checked>
+                    <span>Campus Only</span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" checked>
+                    <span>Events</span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox">
+                    <span>Public</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <button type="submit" class="primary-btn search-btn">
+              <span>Search Rides</span>
+              <div class="btn-glow"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="search-results">
+        <h3>Available Campus Rides</h3>
+        
+        <div class="results-container">
+          <div class="ride-card">
+            <div class="ride-header">
+              <div class="driver-info">
+                <div class="driver-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9C13.99 12.9 17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="driver-details">
+                  <h4>Alex J.</h4>
+                  <div class="driver-rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star half">★</span>
+                    <span class="rating-count">(24)</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ride-type campus">Campus Only</div>
+            </div>
+            
+            <div class="ride-details">
+              <div class="ride-route">
+                <div class="route-point">
+                  <div class="point-marker origin"></div>
+                  <div class="point-info">
+                    <div class="point-time">8:30 AM</div>
+                    <div class="point-location">North Campus Housing</div>
+                  </div>
+                </div>
+                <div class="route-line"></div>
+                <div class="route-point">
+                  <div class="point-marker destination"></div>
+                  <div class="point-info">
+                    <div class="point-time">8:45 AM</div>
+                    <div class="point-location">Engineering Building</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="ride-meta">
+                <div class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H12V15H7V10Z" fill="currentColor"/>
+                  </svg>
+                  <span>Today</span>
+                </div>
+                <div class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 11C17.66 11 19 9.66 19 8C19 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 11 9.66 11 8C11 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V18H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V18H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+                  </svg>
+                  <span>2 seats left</span>
+                </div>
+                <div class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="currentColor"/>
+                  </svg>
+                  <span>$2.50</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="ride-actions">
+              <button class="secondary-btn details-btn">View Details</button>
+              <button class="primary-btn request-btn">
+                <span>Request Ride</span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+          </div>
+          
+          <div class="ride-card">
+            <div class="ride-header">
+              <div class="driver-info">
+                <div class="driver-avatar">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9C13.99 12.9 17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="driver-details">
+                  <h4>Sarah M.</h4>
+                  <div class="driver-rating">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="rating-count">(31)</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ride-type event">Campus Event</div>
+            </div>
+            
+            <div class="ride-details">
+              <div class="ride-route">
+                <div class="route-point">
+                  <div class="point-marker origin"></div>
+                  <div class="point-info">
+                    <div class="point-time">5:30 PM</div>
+                    <div class="point-location">Student Center</div>
+                  </div>
+                </div>
+                <div class="route-line"></div>
+                <div class="route-point">
+                  <div class="point-marker destination"></div>
+                  <div class="point-info">
+                    <div class="point-time">5:45 PM</div>
+                    <div class="point-location">University Stadium</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="ride-meta">
+                <div class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3H18V1H16V3H8V1H6V3H5C3.89 3 3.01 3.9 3.01 5L3 19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V8H19V19ZM7 10H12V15H7V10Z" fill="currentColor"/>
+                  </svg>
+                  <span>Friday</span>
+                </div>
+                <div class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 11C17.66 11 19 9.66 19 8C19 6.  xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 11C17.66 11 19 9.66 19 8C19 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 11 9.66 11 8C11 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V18H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V18H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+                  </svg>
+                  <span>3 seats left</span>
+                </div>
+                <div class="meta-item">
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" fill="currentColor"/>
+                  </svg>
+                  <span>Free</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="ride-actions">
+              <button class="secondary-btn details-btn">View Details</button>
+              <button class="primary-btn request-btn">
+                <span>Request Ride</span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Action Button -->
+  <div class="fab">
+    <button class="fab-btn">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="fab-menu">
+      <button class="fab-menu-item" data-action="create-ride">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5H6.5C5.84 5 5.29 5.42 5.08 6.01L3 12V20C3 20.55 3.45 21 4 21H5C5.55 21 6 20.55 6 20V19H18V20C18 20.55 18.45 21 19 21H20C20.55 21 21 20.55 21 20V12L18.92 6.01ZM6.5 16C5.67 16 5 15.33 5 14.5C5 13.67 5.67 13 6.5 13C7.33 13 8 13.67 8 14.5C8 15.33 7.33 16 6.5 16ZM17.5 16C16.67 16 16 15.33 16 14.5C16 13.67 16.67 13 17.5 13C18.33 13 19 13.67 19 14.5C19 15.33 18.33 16 17.5 16ZM5 11L6.5 6.5H17.5L19 11H5Z" fill="currentColor"/>
+        </svg>
+        <span>Offer Ride</span>
+      </button>
+      <button class="fab-menu-item" data-action="find-ride">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+        </svg>
+        <span>Find Ride</span>
+      </button>
+      <button class="fab-menu-item" data-action="community">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 11C17.66 11 19 9.66 19 8C19 6.34 17.66 5 16 5C14.34 5 13 6.34 13 8C13 9.66 14.34 11 16 11ZM8 11C9.66 11 11 9.66 11 8C11 6.34 9.66 5 8 5C6.34 5 5 6.34 5 8C5 9.66 6.34 11 8 11ZM8 13C5.67 13 1 14.17 1 16.5V18H15V16.5C15 14.17 10.33 13 8 13ZM16 13C15.71 13 15.38 13.02 15.03 13.05C16.19 13.89 17 15.02 17 16.5V18H23V16.5C23 14.17 18.33 13 16 13Z" fill="currentColor"/>
+        </svg>
+        <span>Community</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast-container">
+    <div class="toast success hidden">
+      <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="toast-content">
+        <h4>Success!</h4>
+        <p>Your ride has been created successfully.</p>
+      </div>
+      <button class="toast-close">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="toast error hidden">
+      <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="toast-content">
+        <h4>Error</h4>
+        <p>Please fill in all required fields.</p>
+      </div>
+      <button class="toast-close">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="toast info hidden">
+      <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V11H13V17ZM13 9H11V7H13V9Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="toast-content">
+        <h4>Info</h4>
+        <p>Your request has been sent.</p>
+      </div>
+      <button class="toast-close">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="community.js"></script>
+</body>
+</html>
