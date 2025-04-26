@@ -32,6 +32,12 @@
                 <a href="#about">About</a>
                 <a href="community.html" class="nav-button">Communitypool</a>
                 <a href="auth.html" class="nav-button get-started-button">Get Started</a>
+                <div class="user-dropdown hidden">
+                    <ul>
+                        <li id="profile-option">Profile</li>
+                        <li id="logout-option">Logout</li>
+                    </ul>
+                </div>
                 <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                     <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -360,6 +366,47 @@
                 }
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const fullName = localStorage.getItem('fullName');
+            const getStartedButton = document.querySelector('.get-started-button');
+            const userDropdown = document.querySelector('.user-dropdown');
+            const profileOption = document.getElementById('profile-option');
+            const logoutOption = document.getElementById('logout-option');
+
+            if (fullName && getStartedButton && userDropdown) {
+                // Change button text to full name
+                getStartedButton.innerText = fullName;
+
+                // Remove any previous href or default action
+                getStartedButton.removeAttribute('href');
+
+                // Click on name -> toggle dropdown
+                getStartedButton.addEventListener('click', function (e) {
+                    e.preventDefault(); // VERY IMPORTANT - stop any redirect
+                    userDropdown.classList.toggle('hidden');
+                });
+
+                // Profile click
+                profileOption.addEventListener('click', function () {
+                    window.location.href = 'profile.html';
+                });
+
+                // Logout click
+                logoutOption.addEventListener('click', function () {
+                    localStorage.removeItem('fullName');
+                    window.location.reload();
+                });
+
+                // Close dropdown when clicked outside
+                document.addEventListener('click', function (e) {
+                    if (!getStartedButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                        userDropdown.classList.add('hidden');
+                    }
+                });
+            }
+        });
+
 
     </script>
     <script src="script.js"></script>
