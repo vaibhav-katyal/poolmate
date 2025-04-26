@@ -273,16 +273,35 @@
     </div>
     <script>
         function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
             const data = parseJwt(response.credential);
+
             console.log("User Data: ", data);
 
-            // Store the user's full name in localStorage
-            localStorage.setItem('fullName', data.name);
+            // Send data to backend to save
+            fetch('/api/auth/google', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fullName: data.name,
+                    email: data.email
+                })
+            })
+                .then(res => res.json())
+                .then(result => {
+                    console.log(result.message);
 
-            // Redirect to index page
-            window.location.href = "index.html";
+                    // ✅ Store the user's full name in localStorage
+                    localStorage.setItem('fullName', data.name);
+
+                    // ✅ Redirect ya kuch aur karo
+                    window.location.href = "index.html";
+                })
+                .catch(err => console.error('❌ Error:', err));
         }
+
+
 
         // JWT ko decode karne ka helper function
         function parseJwt(token) {
