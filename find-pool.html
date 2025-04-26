@@ -390,7 +390,101 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <!-- Pool details will be dynamically added here -->
+                        <!-- Enhanced Pool details will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method Modal -->
+            <div id="payment-method-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Select Payment Method</h3>
+                        <button class="close-modal" aria-label="Close modal">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="payment-methods">
+                            <div class="payment-method-option">
+                                <input type="radio" id="payment-upi" name="payment-method" value="upi" checked>
+                                <label for="payment-upi">
+                                    <div class="payment-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">UPI</span>
+                                        <span class="payment-description">Pay directly from your bank account</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="payment-method-option">
+                                <input type="radio" id="payment-card" name="payment-method" value="card">
+                                <label for="payment-card">
+                                    <div class="payment-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M21 4H3C1.89543 4 1 4.89543 1 6V18C1 19.1046 1.89543 20 3 20H21C22.1046 20 23 19.1046 23 18V6C23 4.89543 22.1046 4 21 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M1 10H23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">Credit/Debit Card</span>
+                                        <span class="payment-description">Pay with Visa, Mastercard, RuPay</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="payment-method-option">
+                                <input type="radio" id="payment-wallet" name="payment-method" value="wallet">
+                                <label for="payment-wallet">
+                                    <div class="payment-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M16 14C16.5523 14 17 13.5523 17 13C17 12.4477 16.5523 12 16 12C15.4477 12 15 12.4477 15 13C15 13.5523 15.4477 14 16 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">Mobile Wallet</span>
+                                        <span class="payment-description">Pay with Paytm, PhonePe, etc.</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="payment-method-option">
+                                <input type="radio" id="payment-cash" name="payment-method" value="cash">
+                                <label for="payment-cash">
+                                    <div class="payment-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 1V23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M17 5H9.5C8.57174 5 7.6815 5.36875 7.02513 6.02513C6.36875 6.6815 6 7.57174 6 8.5C6 9.42826 6.36875 10.3185 7.02513 10.9749C7.6815 11.6313 8.57174 12 9.5 12H14.5C15.4283 12 16.3185 12.3687 16.9749 13.0251C17.6313 13.6815 18 14.5717 18 15.5C18 16.4283 17.6313 17.3185 16.9749 17.9749C16.3185 18.6313 15.4283 19 14.5 19H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">Cash</span>
+                                        <span class="payment-description">Pay directly to the driver</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="payment-summary">
+                            <div class="summary-item">
+                                <span>Ride Fare</span>
+                                <span id="payment-ride-fare">₹180</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>Service Fee</span>
+                                <span>₹20</span>
+                            </div>
+                            <div class="summary-item total">
+                                <span>Total Amount</span>
+                                <span id="payment-total-amount">₹200</span>
+                            </div>
+                        </div>
+                        <button id="confirm-payment-btn" class="button primary">Confirm Payment</button>
                     </div>
                 </div>
             </div>
@@ -418,6 +512,10 @@
                         <div class="booking-detail">
                             <span>Amount Paid</span>
                             <strong id="booking-amount">₹180</strong>
+                        </div>
+                        <div class="booking-detail">
+                            <span>Payment Method</span>
+                            <strong id="booking-payment-method">UPI</strong>
                         </div>
                     </div>
                     <div class="modal-actions">

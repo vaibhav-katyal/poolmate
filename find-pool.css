@@ -1398,4 +1398,431 @@
       margin-bottom: 10px;
     }
   }
-  
+  /* Fix for drop location text overflow in cards */
+.route-point-value {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Ensure text doesn't overflow */
+}
+
+/* Enhanced Modal Styles */
+.modal-body {
+    padding: 25px;
+}
+
+/* Enhanced Ride Details */
+.pool-details {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pool-details-section {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+.pool-details-section:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.pool-details-header {
+    margin-bottom: 15px;
+}
+
+.pool-details-header h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: var(--accent-color);
+}
+
+.pool-details-header p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.driver-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.driver-avatar-large {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: rgba(var(--accent-rgb), 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 1.8rem;
+    border: 2px solid rgba(var(--accent-rgb), 0.2);
+}
+
+.driver-info-large {
+    flex: 1;
+}
+
+.driver-name-large {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.driver-stats {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.driver-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--input-background);
+    padding: 10px;
+    border-radius: var(--border-radius-md);
+    min-width: 80px;
+}
+
+.driver-stat-value {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+}
+
+.driver-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.route-info-detailed {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.route-points-detailed {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.route-connector-line {
+    position: absolute;
+    left: 12px;
+    top: 30px;
+    bottom: 10px;
+    width: 2px;
+    background-color: var(--border-color);
+    z-index: 1;
+}
+
+.route-point-detailed {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 20px;
+}
+
+.route-point-detailed:last-child {
+    padding-bottom: 0;
+}
+
+.route-point-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.route-point-detailed:last-child .route-point-icon {
+    background-color: var(--success-color);
+}
+
+.route-point-content {
+    flex: 1;
+}
+
+.route-point-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.route-point-address {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.ride-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.ride-detail-item {
+    background-color: var(--input-background);
+    padding: 15px;
+    border-radius: var(--border-radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ride-detail-icon {
+    margin-bottom: 10px;
+    color: var(--accent-color);
+}
+
+.ride-detail-value {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.ride-detail-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.vehicle-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.vehicle-image {
+    width: 80px;
+    height: 80px;
+    background-color: var(--input-background);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.vehicle-info {
+    flex: 1;
+}
+
+.vehicle-model {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.vehicle-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.vehicle-feature {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--input-background);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.booking-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.price-breakdown {
+    background-color: var(--input-background);
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.price-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+    font-weight: 700;
+}
+
+.price-item:last-child .price-value {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+.seat-selection {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.seat-counter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.seat-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.seat-btn:hover {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.seat-count {
+    font-weight: 600;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Payment Method Modal Styles */
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.payment-method-option {
+    position: relative;
+}
+
+.payment-method-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.payment-method-option label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.payment-method-option input[type="radio"]:checked + label {
+    border-color: var(--accent-color);
+    background-color: rgba(var(--accent-rgb), 0.05);
+}
+
+.payment-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--input-background);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.payment-details {
+    flex: 1;
+}
+
+.payment-name {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.payment-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.payment-summary {
+    background-color: var(--input-background);
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.summary-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.summary-item.total {
+    font-weight: 700;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.summary-item.total span:last-child {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+/* Responsive fixes */
+@media (max-width: 576px) {
+    .driver-profile {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .ride-details-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .vehicle-details {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
