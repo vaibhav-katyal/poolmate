@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Pool - Create Your Ride Offer</title>
+    <link rel="stylesheet" href="offer-pool.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M16 2C8.268 2 2 8.268 2 16C2 23.732 8.268 30 16 30C23.732 30 30 23.732 30 16C30 8.268 23.732 2 16 2Z"
+                        fill="var(--accent-color)" fill-opacity="0.2" />
+                    <path
+                        d="M16 6C10.477 6 6 10.477 6 16C6 21.523 10.477 26 16 26C21.523 26 26 21.523 26 16C26 10.477 21.523 6 16 6ZM16 22C12.686 22 10 19.314 10 16C10 12.686 12.686 10 16 10C19.314 10 22 12.686 22 16C22 19.314 19.314 22 16 22Z"
+                        fill="var(--accent-color)" />
+                </svg>
+                <span>PoolMate</span>
+            </div>
+            <div class="nav-links">
+                <a href="#how-it-works">How it works</a>
+                <a href="#benefits">Benefits</a>
+                <a href="#about">About</a>
+                <a href="auth.html" class="nav-button">Get Started</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 17C14.7614 17 17 14.7614 17 12C17 9.23858 14.7614 7 12 7C9.23858 7 7 9.23858 7 12C7 14.7614 9.23858 17 12 17Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 1V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M12 21V23" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.22 4.22L5.64 5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M18.36 18.36L19.78 19.78" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M1 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M21 12H23" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.22 19.78L5.64 18.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M21 12.79C20.8427 14.4922 20.2039 16.1144 19.1582 17.4668C18.1126 18.8192 16.7035 19.8458 15.0957 20.4265C13.4879 21.0073 11.748 21.1181 10.0795 20.7461C8.41104 20.3741 6.88302 19.5345 5.67425 18.3258C4.46548 17.117 3.62596 15.589 3.25393 13.9205C2.8819 12.252 2.99274 10.5121 3.57348 8.9043C4.15423 7.29651 5.18085 5.88737 6.53324 4.84175C7.88562 3.79614 9.5078 3.15731 11.21 3C10.2134 4.34827 9.73385 6.00945 9.85853 7.68141C9.98322 9.35338 10.7039 10.9251 11.8894 12.1106C13.0749 13.2961 14.6466 14.0168 16.3186 14.1415C17.9906 14.2662 19.6517 13.7866 21 12.79Z"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="#how-it-works">How it works</a>
+            <a href="#benefits">Benefits</a>
+            <a href="#about">About</a>
+            <a href="auth.html" class="mobile-nav-button">Get Started</a>
+        </div>
+        <header>
+            <h1>Create Your Ride Offer</h1>
+            <button id="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </header>
+
+        <div class="timeline">
+            <div class="timeline-step active" data-step="1">
+                <div class="timeline-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
+                        <circle cx="12" cy="10" r="3" />
+                    </svg>
+                </div>
+                <div class="timeline-label">Route</div>
+            </div>
+            <div class="timeline-connector"></div>
+            <div class="timeline-step" data-step="2">
+                <div class="timeline-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                </div>
+                <div class="timeline-label">Vehicle</div>
+            </div>
+            <div class="timeline-connector"></div>
+            <div class="timeline-step" data-step="3">
+                <div class="timeline-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <div class="timeline-label">Confirm</div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <!-- Step 1: Route -->
+            <form id="step1-form" class="step-form active">
+                <h2>Route Details</h2>
+
+                <div class="form-group">
+                    <label for="starting-point">Starting Point</label>
+                    <div class="input-with-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="10" r="3"></circle>
+                            <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"></path>
+                        </svg>
+                        <input type="text" id="starting-point" name="starting-point"
+                            placeholder="Enter starting location" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="destination-point">Destination Point</label>
+                    <div class="input-with-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="10" r="3"></circle>
+                            <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"></path>
+                        </svg>
+                        <input type="text" id="destination-point" name="destination-point"
+                            placeholder="Enter destination location" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="journey-date">Journey Date</label>
+                        <div class="input-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <input type="date" id="journey-date" name="journey-date" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="journey-time">Journey Time</label>
+                        <div class="input-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <input type="time" id="journey-time" name="journey-time" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Vehicle Type</label>
+                    <div class="card-selection">
+                        <div class="selection-card" data-value="2-wheeler">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M4 16v1a3 3 0 0 0 3 3h4a3 3 0 0 0 3-3v-1"></path>
+                                    <path d="M8 16l1-3h2l1 3"></path>
+                                    <path d="M9 7v4"></path>
+                                    <path d="M5 4l4 3h6l4-3"></path>
+                                    <path d="M5 4v3h4"></path>
+                                    <path d="M19 4v3h-4"></path>
+                                    <circle cx="5" cy="16" r="3"></circle>
+                                    <circle cx="19" cy="16" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="card-label">2-Wheeler</div>
+                        </div>
+                        <div class="selection-card" data-value="4-wheeler">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2">
+                                    </path>
+                                    <circle cx="6.5" cy="16.5" r="2.5"></circle>
+                                    <circle cx="16.5" cy="16.5" r="2.5"></circle>
+                                </svg>
+                            </div>
+                            <div class="card-label">4-Wheeler</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="vehicle-type" name="vehicle-type" required>
+                </div>
+
+                <div id="seating-options" class="form-group hidden">
+                    <label>Seating Capacity</label>
+                    <div class="card-selection">
+                        <div class="selection-card small" data-value="4">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z">
+                                    </path>
+                                    <circle cx="10" cy="10" r="3"></circle>
+                                    <path d="m21 21-7-7"></path>
+                                </svg>
+                            </div>
+                            <div class="card-label">4 Seater</div>
+                        </div>
+                        <div class="selection-card small" data-value="5">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z">
+                                    </path>
+                                    <circle cx="10" cy="10" r="3"></circle>
+                                    <path d="m21 21-7-7"></path>
+                                </svg>
+                            </div>
+                            <div class="card-label">5 Seater</div>
+                        </div>
+                        <div class="selection-card small" data-value="7">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z">
+                                    </path>
+                                    <circle cx="10" cy="10" r="3"></circle>
+                                    <path d="m21 21-7-7"></path>
+                                </svg>
+                            </div>
+                            <div class="card-label">7 Seater</div>
+                        </div>
+                        <div class="selection-card small" data-value="9">
+                            <div class="card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z">
+                                    </path>
+                                    <circle cx="10" cy="10" r="3"></circle>
+                                    <path d="m21 21-7-7"></path>
+                                </svg>
+                            </div>
+                            <div class="card-label">9 Seater</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="seating-capacity" name="seating-capacity">
+                </div>
+
+                <div id="available-seats" class="form-group hidden">
+                    <label for="seat-count">Available Seats</label>
+                    <div class="number-input">
+                        <button type="button" class="decrement">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                        <input type="number" id="seat-count" name="seat-count" min="1" max="9" value="1" readonly>
+                        <button type="button" class="increment">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="price-per-seat" class="form-group hidden">
+                    <label for="seat-price">Price Per Seat</label>
+                    <div class="input-with-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        <input type="number" id="seat-price" name="seat-price" min="0"
+                            placeholder="Enter price per seat">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="additional-note">Additional Note</label>
+                    <div class="input-with-icon textarea">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"></path>
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                        </svg>
+                        <textarea id="additional-note" name="additional-note"
+                            placeholder="Any additional information about your ride offer"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-continue">
+                        Continue
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Step 2: Vehicle -->
+            <form id="step2-form" class="step-form">
+                <h2>Vehicle Details</h2>
+
+                <div class="form-group">
+                    <label for="vehicle-name">Vehicle Name</label>
+                    <input type="text" id="vehicle-name" name="vehicle-name" placeholder="Enter vehicle name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicle-brand">Vehicle Brand</label>
+                        <input type="text" id="vehicle-brand" name="vehicle-brand" placeholder="Enter brand" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vehicle-model">Vehicle Model</label>
+                        <input type="text" id="vehicle-model" name="vehicle-model" placeholder="Enter model" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicle-color">Vehicle Color</label>
+                        <div class="input-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 11 3 3L22 4"></path>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                            </svg>
+                            <input type="text" id="vehicle-color" name="vehicle-color" placeholder="Enter color"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="number-plate">Number Plate</label>
+                        <div class="input-with-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                <path d="M2 10h20"></path>
+                            </svg>
+                            <input type="text" id="number-plate" name="number-plate" placeholder="Enter plate number"
+                                required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Vehicle Image</label>
+                    <div class="file-upload">
+                        <div class="file-upload-area" id="vehicle-image-upload">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2">
+                                </path>
+                                <circle cx="6.5" cy="16.5" r="2.5"></circle>
+                                <circle cx="16.5" cy="16.5" r="2.5"></circle>
+                            </svg>
+                            <p>Drag & drop your vehicle image or <span>browse</span></p>
+                            <input type="file" id="vehicle-image" name="vehicle-image" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview" id="vehicle-image-preview"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload License Image</label>
+                    <div class="file-upload">
+                        <div class="file-upload-area" id="license-image-upload">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                                <rect x="7" y="8" width="10" height="3"></rect>
+                                <rect x="7" y="14" width="6" height="3"></rect>
+                            </svg>
+                            <p>Drag & drop your license image or <span>browse</span></p>
+                            <input type="file" id="license-image" name="license-image" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview" id="license-image-preview"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Driver Photo</label>
+                    <div class="file-upload">
+                        <div class="file-upload-area" id="driver-photo-upload">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <p>Drag & drop your photo or <span>browse</span></p>
+                            <input type="file" id="driver-photo" name="driver-photo" accept="image/*" hidden>
+                        </div>
+                        <div class="image-preview" id="driver-photo-preview"></div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-back">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Back
+                    </button>
+                    <button type="button" class="btn-continue">
+                        Continue
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Step 3: Confirm -->
+            <form id="step3-form" class="step-form">
+                <h2>Confirm Your Offer</h2>
+
+                <div class="confirmation-card">
+                    <h3>Route Details</h3>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Starting Point:</div>
+                        <div class="confirmation-value" id="confirm-starting-point">-</div>
+                    </div>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Destination:</div>
+                        <div class="confirmation-value" id="confirm-destination">-</div>
+                    </div>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Journey Date & Time:</div>
+                        <div class="confirmation-value" id="confirm-datetime">-</div>
+                    </div>
+                </div>
+
+                <div class="confirmation-card">
+                    <h3>Vehicle Details</h3>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Vehicle Type:</div>
+                        <div class="confirmation-value" id="confirm-vehicle-type">-</div>
+                    </div>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Vehicle:</div>
+                        <div class="confirmation-value" id="confirm-vehicle-details">-</div>
+                    </div>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Number Plate:</div>
+                        <div class="confirmation-value" id="confirm-number-plate">-</div>
+                    </div>
+                </div>
+
+                <div class="confirmation-card">
+                    <h3>Seat & Price Details</h3>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Seating Capacity:</div>
+                        <div class="confirmation-value" id="confirm-seating-capacity">-</div>
+                    </div>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Available Seats:</div>
+                        <div class="confirmation-value" id="confirm-available-seats">-</div>
+                    </div>
+                    <div class="confirmation-item">
+                        <div class="confirmation-label">Price Per Seat:</div>
+                        <div class="confirmation-value" id="confirm-price">-</div>
+                    </div>
+                </div>
+
+                <div class="confirmation-card">
+                    <h3>Uploaded Images</h3>
+                    <div class="confirmation-images">
+                        <div class="confirmation-image">
+                            <div class="image-label">Vehicle Image</div>
+                            <div class="image-container" id="confirm-vehicle-image">No image uploaded</div>
+                        </div>
+                        <div class="confirmation-image">
+                            <div class="image-label">License Image</div>
+                            <div class="image-container" id="confirm-license-image">No image uploaded</div>
+                        </div>
+                        <div class="confirmation-image">
+                            <div class="image-label">Driver Photo</div>
+                            <div class="image-container" id="confirm-driver-photo">No image uploaded</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="terms-checkbox" name="terms-checkbox" required>
+                        <label for="terms-checkbox">I agree to the <a href="#">Terms & Conditions</a></label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-back">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        Back
+                    </button>
+                    <button type="submit" class="btn-publish">
+                        Publish Offer
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v4"></path>
+                            <path d="m4.93 10.93 2.83-2.83"></path>
+                            <path d="M2 18h4"></path>
+                            <path d="m19.07 10.93-2.83-2.83"></path>
+                            <path d="M18 18h4"></path>
+                            <path d="m8.93 19.07 2.83 2.83"></path>
+                            <path d="m12.93 16.93 2.83 2.83"></path>
+                            <path d="M12 22v-4"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="success-modal" id="success-modal">
+        <div class="success-content">
+            <div class="success-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h2>Success!</h2>
+            <p>Your ride offer has been published successfully.</p>
+            <button class="btn-close-modal">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="offer-pool.js"></script>
+</body>
+
+</html>
