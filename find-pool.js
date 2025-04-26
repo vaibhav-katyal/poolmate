@@ -34,31 +34,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Current Location
     const currentLocationBtn = document.getElementById('current-location');
-    
-    currentLocationBtn.addEventListener('click', function() {
+
+    currentLocationBtn.addEventListener('click', function () {
         if (navigator.geolocation) {
+            // Show loading spinner or icon
             currentLocationBtn.innerHTML = `
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 18L12 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M4.93 4.93L7.76 7.76" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M16.24 16.24L19.07 19.07" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M2 12L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M18 12L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M4.93 19.07L7.76 16.24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M16.24 7.76L19.07 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
             `;
             currentLocationBtn.classList.add('loading');
-            
+    
             navigator.geolocation.getCurrentPosition(
-                function(position) {
-                    // In a real app, we would use reverse geocoding to get the address
-                    // For demo purposes, we'll just show coordinates
+                function (position) {
                     const lat = position.coords.latitude.toFixed(4);
                     const lng = position.coords.longitude.toFixed(4);
-                    document.getElementById('pickup-location').value = `Current Location (${lat}, ${lng})`;
                     
+                    // Insert current location coordinates into input
+                    document.getElementById('pickup-location').value = `Current Location (${lat}, ${lng})`;
+    
+                    // Revert button back to original icon
                     currentLocationBtn.innerHTML = `
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -74,8 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                     currentLocationBtn.classList.remove('loading');
                 },
-                function(error) {
+                function (error) {
                     alert('Unable to retrieve your location. Please enter manually.');
+    
+                    // Revert back to original icon even if failed
                     currentLocationBtn.innerHTML = `
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -93,9 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             );
         } else {
-            alert('Geolocation is not supported by your browser');
+            alert('Geolocation is not supported by your browser.');
         }
     });
+    
 
     // Search Form Submission
     const searchForm = document.getElementById('search-form');
