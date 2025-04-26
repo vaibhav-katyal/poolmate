@@ -650,9 +650,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showPoolDetails(poolData) {
-        const modal = document.getElementById('pool-details-modal');
-        const modalBody = modal.querySelector('.modal-body');
-
+        const rideModal = document.getElementById('pool-details-modal');
+        const modalBody = rideModal.querySelector('.modal-body');
+    
+        // Fill Ride Details
         modalBody.innerHTML = `
             <h4>${poolData.driver.name} (${poolData.driver.rating} ★)</h4>
             <p><strong>Pickup:</strong> ${poolData.route.pickup}</p>
@@ -660,10 +661,64 @@ document.addEventListener('DOMContentLoaded', function() {
             <p><strong>Vehicle:</strong> ${poolData.vehicle.model} (${poolData.vehicle.color})</p>
             <p><strong>Seats Available:</strong> ${poolData.seats.available}/${poolData.seats.total}</p>
             <p><strong>Price:</strong> ₹${poolData.price}</p>
-            <button class="button primary">Book Now</button>
+            <button id="book-now-btn" class="button primary">Book Now</button>
         `;
-
-        modal.classList.add('active');
+    
+        // Open Ride Details Modal
+        rideModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+    
+        // Book Now button handling
+        const bookNowButton = document.getElementById('book-now-btn');
+        bookNowButton.addEventListener('click', function() {
+            // Close Ride Modal
+            rideModal.classList.remove('active');
+    
+            // Open Payment Modal
+            const paymentModal = document.getElementById('payment-method-modal');
+            paymentModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+    
+            // Update Payment Summary
+            document.getElementById('payment-ride-fare').textContent = `₹${poolData.price}`;
+            document.getElementById('payment-total-amount').textContent = `₹${poolData.price + 20}`;
+    
+            // Confirm Payment button handling
+            const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
+            confirmPaymentBtn.onclick = function() {
+                // Close Payment Modal
+                paymentModal.classList.remove('active');
+    
+                // Open Booking Success Modal
+                const successModal = document.getElementById('booking-success-modal');
+                successModal.classList.add('active');
+    
+                // Update booking success modal content
+                document.getElementById('booking-datetime').textContent = `${poolData.route.date} - ${poolData.route.time}`;
+                document.getElementById('booking-amount').textContent = `₹${poolData.price + 20}`;
+                const selectedMethod = document.querySelector('input[name="payment-method"]:checked')
+                    .nextElementSibling.querySelector('.payment-name').textContent;
+                document.getElementById('booking-payment-method').textContent = selectedMethod;
+    
+                document.body.style.overflow = 'hidden';
+            };
+        });
+    
+        // All modal close buttons (X buttons)
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.modal').classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    
+        // Done button in Success Modal
+        const doneBtn = document.getElementById('close-success-modal');
+        if (doneBtn) {
+            doneBtn.onclick = function() {
+                document.getElementById('booking-success-modal').classList.remove('active');
+                document.body.style.overflow = '';
+            };
+        }
     }
 });
