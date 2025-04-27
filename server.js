@@ -131,6 +131,16 @@ app.post('/api/offer', upload.fields([
     }
 });
 
+app.get('/api/rides', async (req, res) => {
+    try {
+        const rides = await RideOffer.find({});
+        res.json(rides);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
 // Server Start
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
