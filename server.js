@@ -5,7 +5,15 @@ const dotenv = require('dotenv');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const http = require('http');
+const { Server } = require('socket.io');
 
+// Create HTTP server and attach Socket.IO
+const server = http.createServer(app);
+const io = new Server(server);
+
+// Store active socket connections
+const activeUsers = new Map();
 dotenv.config();
 
 const app = express();
