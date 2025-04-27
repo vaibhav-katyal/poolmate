@@ -958,6 +958,7 @@ function openRideDetails(poolData) {
         <div class="pool-actions">
             <button id="book-now-btn" class="button primary">Book Now</button>
             <button id="negotiate-price-btn" class="button secondary">Negotiate Price</button>
+            
         </div>
     `;
 
@@ -1154,7 +1155,7 @@ function proceedToPayment(poolData, finalPrice) {
 
         document.body.style.overflow = 'hidden';
 
-        // ✅ Move done button and view bookings button event listener inside after success modal appears
+        // Add event listener for the "Done" button
         const doneBtn = document.getElementById('close-success-modal');
         if (doneBtn) {
             doneBtn.onclick = function () {
@@ -1163,6 +1164,7 @@ function proceedToPayment(poolData, finalPrice) {
             };
         }
 
+        // Add event listener for the "View My Transactions" button
         const viewBookingsBtn = document.getElementById('view-bookings-btn');
         if (viewBookingsBtn) {
             viewBookingsBtn.onclick = function () {
@@ -1171,5 +1173,23 @@ function proceedToPayment(poolData, finalPrice) {
                 document.body.style.overflow = '';
             };
         }
+
+        // Add the "Chat with Driver" button dynamically
+        const chatWithDriverBtn = document.createElement('button');
+        chatWithDriverBtn.id = 'chat-with-driver-btn';
+        chatWithDriverBtn.className = 'button secondary';
+        chatWithDriverBtn.textContent = 'Chat with Driver';
+
+        // Append the button to the modal footer or desired location
+        const modalFooter = successModal.querySelector('.modal-footer');
+        if (modalFooter) {
+            modalFooter.appendChild(chatWithDriverBtn);
+        }
+
+        // Add event listener for the "Chat with Driver" button
+        chatWithDriverBtn.onclick = function () {
+            alert(`Starting chat with ${poolData.driver.name}.`);
+            // Implement chat functionality here
+        };
     };
 }
