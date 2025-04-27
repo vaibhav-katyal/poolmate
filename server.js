@@ -1,32 +1,39 @@
+// -------- IMPORTS --------
 const express = require('express');
+const http = require('http');
 const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const http = require('http');
 const { Server } = require('socket.io');
 
-// Create HTTP server and attach Socket.IO
-const server = http.createServer(app);
-const io = new Server(server);
-
-// Store active socket connections
-const activeUsers = new Map();
+// -------- CONFIGS --------
 dotenv.config();
-
-const app = express();
+const app = express(); // ✅ app first
 const PORT = 3000;
+const server = http.createServer(app); // ✅ create server after app
+const io = new Server(server); // ✅ bind io with server
+const activeUsers = new Map();
 
-// Cloudinary Config
+// -------- MONGODB CONNECT --------
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('✅ MongoDB Connected Successfully'))
+    .catch((err) => console.error('❌ MongoDB Connection Error:', err));
+
+// -------- MIDDLEWARES --------
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname)));
+
+// -------- CLOUDINARY & MULTER SETUP --------
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// Multer Storage
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
@@ -36,16 +43,7 @@ const storage = new CloudinaryStorage({
 });
 const upload = multer({ storage: storage });
 
-// Mongoose Connect
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('✅ MongoDB Connected Successfully'))
-    .catch((err) => console.error('❌ MongoDB Connection Error:', err));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname)));
-
-// User Model
+// -------- SCHEMAS & MODELS --------
 const userSchema = new mongoose.Schema({
     fullName: String,
     email: String,
@@ -54,7 +52,6 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-// Ride Offer Model
 const rideOfferSchema = new mongoose.Schema({
     driverName: String,
     startingPoint: String,
@@ -78,7 +75,77 @@ const rideOfferSchema = new mongoose.Schema({
 });
 const RideOffer = mongoose.model('RideOffer', rideOfferSchema);
 
-// Auth Google API
+const negotiationSchema = new mongoose.Schema({
+    rideId: mongoose.Schema.Types.ObjectId,
+    userId: mongoose.Schema.Types.ObjectId,
+    offerPrice: Number,
+    status: { type: String, default: "pending" },
+    counterPrice: Number,
+    createdAt: { type: Date, default: Date.now }
+});
+const Negotiation = mongoose.model('Negotiation', negotiationSchema);
+
+// -------- SOCKET.IO HANDLERS --------
+io.on('connection', (socket) => {
+    console.log('✅ User connected:', socket.id);
+
+    socket.on('register', (userId) => {
+        activeUsers.set(userId, socket.id);
+        console.log('✅ Registered userId:', userId);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('❌ User disconnected:', socket.id);
+        for (const [userId, socketId] of activeUsers.entries()) {
+            if (socketId === socket.id) {
+                activeUsers.delete(userId);
+                break;
+            }
+        }
+    });
+
+    socket.on('accept-offer', async ({ negotiationId }) => {
+        const negotiation = await Negotiation.findById(negotiationId);
+        if (negotiation) {
+            negotiation.status = 'accepted';
+            await negotiation.save();
+
+            const userSocketId = activeUsers.get(negotiation.userId.toString());
+            if (userSocketId) {
+                io.to(userSocketId).emit('offer-accepted', { message: '🎉 Your offer was accepted!' });
+            }
+        }
+    });
+
+    socket.on('reject-offer', async ({ negotiationId }) => {
+        const negotiation = await Negotiation.findById(negotiationId);
+        if (negotiation) {
+            negotiation.status = 'rejected';
+            await negotiation.save();
+
+            const userSocketId = activeUsers.get(negotiation.userId.toString());
+            if (userSocketId) {
+                io.to(userSocketId).emit('offer-rejected', { message: '❌ Your offer was rejected.' });
+            }
+        }
+    });
+
+    socket.on('counter-offer', async ({ negotiationId, counterPrice }) => {
+        const negotiation = await Negotiation.findById(negotiationId);
+        if (negotiation) {
+            negotiation.status = 'counter';
+            negotiation.counterPrice = counterPrice;
+            await negotiation.save();
+
+            const userSocketId = activeUsers.get(negotiation.userId.toString());
+            if (userSocketId) {
+                io.to(userSocketId).emit('offer-counter', { negotiationId, counterPrice });
+            }
+        }
+    });
+});
+
+// -------- ROUTES / APIs --------
 app.post('/api/auth/google', async (req, res) => {
     const { fullName, email } = req.body;
 
@@ -95,12 +162,11 @@ app.post('/api/auth/google', async (req, res) => {
 
         res.status(200).json({ message: 'Login successful', user });
     } catch (error) {
-        console.error('❌ Error in Google login API:', error);
+        console.error('❌ Error in Google login:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
 
-// 🚀 NEW API: Offer Ride
 app.post('/api/offer', upload.fields([
     { name: 'vehicleImage', maxCount: 1 },
     { name: 'licenseImage', maxCount: 1 },
@@ -151,28 +217,55 @@ app.get('/api/rides', async (req, res) => {
 
 app.get("/api/search-rides", async (req, res) => {
     try {
-        const { startingPoint, destinationPoint } = req.query
+        const { startingPoint, destinationPoint } = req.query;
 
         if (!startingPoint || !destinationPoint) {
-            return res.status(400).json({ message: "Starting point and destination point are required" })
+            return res.status(400).json({ message: "Starting point and destination point are required" });
         }
 
-        // Create a search query with case-insensitive regex matching
-        const searchQuery = {
+        const rides = await RideOffer.find({
             startingPoint: { $regex: startingPoint, $options: "i" },
-            destinationPoint: { $regex: destinationPoint, $options: "i" },
+            destinationPoint: { $regex: destinationPoint, $options: "i" }
+        });
+
+        res.json(rides);
+    } catch (err) {
+        console.error("❌ Error searching rides:", err);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
+app.post('/api/negotiate', async (req, res) => {
+    try {
+        const { rideId, userId, offerPrice } = req.body;
+
+        const negotiation = new Negotiation({
+            rideId,
+            userId,
+            offerPrice
+        });
+
+        await negotiation.save();
+
+        const ride = await RideOffer.findById(rideId);
+        const driverSocketId = activeUsers.get(ride.driverName);
+
+        if (driverSocketId) {
+            io.to(driverSocketId).emit('incoming-negotiation', {
+                negotiationId: negotiation._id,
+                offerPrice,
+                userId
+            });
         }
 
-        const rides = await RideOffer.find(searchQuery)
-
-        res.json(rides)
-    } catch (err) {
-        console.error("❌ Error searching rides:", err)
-        res.status(500).json({ message: "Server Error" })
+        res.json({ success: true, negotiation });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Negotiation failed" });
     }
-})
+});
 
-// Server Start
-app.listen(PORT, () => {
+// -------- SERVER START --------
+server.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

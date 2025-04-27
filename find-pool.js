@@ -105,32 +105,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     searchForm.addEventListener("submit", async function (e) {
         e.preventDefault()
-    
+
         const pickupLocation = document.getElementById("pickup-location").value.trim()
         const dropLocation = document.getElementById("drop-location").value.trim()
-    
+
         if (!pickupLocation || !dropLocation) {
             alert("Please enter both pickup and drop locations")
             return
         }
-    
+
         const searchButton = this.querySelector(".search-button")
         const originalButtonText = searchButton.innerHTML
         searchButton.innerHTML = `<svg class="spinner" ... ></svg> Searching...`
-    
+
         try {
             // 👉 Ye fetch karega database se real data
             const response = await fetch(`/api/search-rides?startingPoint=${encodeURIComponent(pickupLocation)}&destinationPoint=${encodeURIComponent(dropLocation)}`)
             const rides = await response.json()
             fetchedRides = rides; // 👈 Save rides globally here
-    
+
             const progressSteps = document.querySelectorAll(".progress-step")
             progressSteps[0].classList.add("completed")
             progressSteps[1].classList.add("active")
-    
+
             resultsSection.classList.remove("hidden")
             document.getElementById("results-count").textContent = rides.length
-    
+
             if (rides.length > 0) {
                 listView.innerHTML = ""
                 rides.forEach((ride) => {
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     listView.innerHTML += generatePoolCard(poolData)
                 })
-    
+
                 listView.classList.remove("hidden")
                 noResults.classList.add("hidden")
                 addPoolCardEventListeners()
@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 listView.classList.add("hidden")
                 noResults.classList.remove("hidden")
             }
-    
+
             resultsSection.scrollIntoView({ behavior: "smooth" })
         } catch (error) {
             console.error("❌ Error fetching rides:", error)
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
             searchButton.innerHTML = originalButtonText
         }
     })
-    
+
 
     // Modify Search button in No Results section
     document.getElementById("modify-search-btn").addEventListener("click", () => {
@@ -546,12 +546,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function getPoolData(poolId) {
         // Find in fetched rides
         const ride = fetchedRides.find((r) => r._id === poolId);
-    
+
         if (!ride) {
             console.error(`Ride not found for id: ${poolId}`);
             return null;
         }
-    
+
         // Prepare data in expected format
         const poolData = {
             id: ride._id,
@@ -585,13 +585,16 @@ document.addEventListener('DOMContentLoaded', function () {
             price: ride.seatPrice,
             features: [],
         };
-    
+
         return poolData;
     }
 
     function showPoolDetails(poolData) {
         const rideModal = document.getElementById('pool-details-modal');
         const modalBody = rideModal.querySelector('.modal-body');
+
+        // Store the current pool data globally
+        currentSelectedPool = poolData;
 
         // Fill Ride Details
         modalBody.innerHTML = `
@@ -601,17 +604,27 @@ document.addEventListener('DOMContentLoaded', function () {
             <p><strong>Vehicle:</strong> ${poolData.vehicle.model} (${poolData.vehicle.color})</p>
             <p><strong>Seats Available:</strong> ${poolData.seats.available}/${poolData.seats.total}</p>
             <p><strong>Price:</strong> ₹${poolData.price}</p>
-            <button id="book-now-btn" class="button primary">Book Now</button>
+            <div class="pool-actions">
+                <button id="book-now-btn" class="button primary">Book Now</button>
+                <button id="negotiate-price-btn" class="button secondary">Negotiate Price</button>
+            </div>
         `;
 
         // Open Ride Details Modal
         rideModal.classList.add('active');
         document.body.style.overflow = 'hidden';
 
+        // Add event listener to the negotiate price button
+        const negotiateBtn = document.getElementById('negotiate-price-btn');
+        negotiateBtn.addEventListener('click', function () {
+            console.log('Negotiate button clicked'); // For debugging
+            rideModal.classList.remove('active');
+            openPriceNegotiationModal(poolData);
+        });
+
         // Book Now button handling
         const bookNowButton = document.getElementById('book-now-btn');
         bookNowButton.addEventListener('click', function () {
-            // Close Ride Modal
             rideModal.classList.remove('active');
 
             // Open Payment Modal
@@ -636,9 +649,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Update booking success modal content
                 document.getElementById('booking-datetime').textContent = `${poolData.route.date} - ${poolData.route.time}`;
                 document.getElementById('booking-amount').textContent = `₹${poolData.price + 20}`;
-                const selectedMethod = document.querySelector('input[name="payment-method"]:checked')
-                    .nextElementSibling.querySelector('.payment-name').textContent;
-                document.getElementById('booking-payment-method').textContent = selectedMethod;
+
+                const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
+                if (selectedMethod && selectedMethod.nextElementSibling) {
+                    const paymentName = selectedMethod.nextElementSibling.querySelector('.payment-name');
+                    if (paymentName) {
+                        document.getElementById('booking-payment-method').textContent = paymentName.textContent;
+                    }
+                }
 
                 document.body.style.overflow = 'hidden';
             };
@@ -651,15 +669,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.body.style.overflow = '';
             });
         });
-
-        // Done button in Success Modal
-        const doneBtn = document.getElementById('close-success-modal');
-        if (doneBtn) {
-            doneBtn.onclick = function () {
-                document.getElementById('booking-success-modal').classList.remove('active');
-                document.body.style.overflow = '';
-            };
-        }
     }
 });
 // Add this to your existing JavaScript file
@@ -685,11 +694,11 @@ function generatePoolCard(pool) {
 let currentSelectedPool = null;
 
 // Initialize event listeners when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize the main negotiate price button if it exists on the page
     const negotiatePriceBtn = document.getElementById('negotiate-price-btn');
     if (negotiatePriceBtn) {
-        negotiatePriceBtn.addEventListener('click', function() {
+        negotiatePriceBtn.addEventListener('click', function () {
             // If we don't have pool data yet, use a default for testing
             const defaultPool = {
                 price: 180,
@@ -707,7 +716,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize close buttons for all modals
     const closeButtons = document.querySelectorAll('.close-modal');
     closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const modal = this.closest('.modal');
             if (modal) {
                 modal.classList.remove('active');
@@ -715,7 +724,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-    
+
     // Setup driver response modal actions
     setupDriverResponseModalActions();
 });
@@ -754,12 +763,16 @@ function showPoolDetails(poolData) {
 // Function to open price negotiation modal
 function openPriceNegotiationModal(poolData) {
     const modal = document.getElementById('price-negotiation-modal');
+    if (!modal) {
+        console.error('Error: Price negotiation modal not found in the DOM');
+        return;
+    }
 
     // Fill ride info
     document.getElementById('negotiation-pickup').textContent = poolData.route.pickup;
     document.getElementById('negotiation-dropoff').textContent = poolData.route.drop;
-    document.getElementById('negotiation-distance').textContent = "10 km"; // Placeholder
-    document.getElementById('negotiation-duration').textContent = "25 min"; // Placeholder
+    document.getElementById('negotiation-distance').textContent = poolData.route.distance || "~15 km";
+    document.getElementById('negotiation-duration').textContent = poolData.route.duration || "~40 min";
     document.getElementById('suggested-price').textContent = `₹${poolData.price}`;
 
     const suggestedPrice = poolData.price;
@@ -770,6 +783,7 @@ function openPriceNegotiationModal(poolData) {
     customPriceInput.min = minPrice;
     customPriceInput.placeholder = `Min ₹${minPrice}`;
 
+    // Setup quick price buttons
     const quickPriceButtons = document.querySelectorAll('.quick-price-btn');
     quickPriceButtons.forEach(button => {
         button.classList.remove('active');
@@ -781,24 +795,30 @@ function openPriceNegotiationModal(poolData) {
             customPriceInput.value = newPrice;
             quickPriceButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
-            validatePrice(newPrice, minPrice); // Validate the price
+            validatePrice(newPrice, minPrice);
         }
     });
 
+    // Setup custom price input validation
     customPriceInput.oninput = function () {
-        validatePrice(parseInt(this.value) || 0, minPrice); // Validate custom input price, handle empty input
+        validatePrice(parseInt(this.value) || 0, minPrice);
     };
 
-    document.getElementById('send-price-request-btn').onclick = function () {
+    // Setup send price request button
+    const sendPriceRequestBtn = document.getElementById('send-price-request-btn');
+    sendPriceRequestBtn.onclick = function () {
         modal.classList.remove('active');
-        openDriverResponseModal(poolData, parseInt(customPriceInput.value)); // Open driver response modal
+        openDriverResponseModal(poolData, parseInt(customPriceInput.value));
     };
 
-    document.getElementById('book-at-suggested-btn').onclick = function () {
+    // Setup book at suggested price button
+    const bookAtSuggestedBtn = document.getElementById('book-at-suggested-btn');
+    bookAtSuggestedBtn.onclick = function () {
         modal.classList.remove('active');
-        proceedToPayment(poolData, suggestedPrice); // Proceed with suggested price
+        proceedToPayment(poolData, suggestedPrice);
     };
 
+    // Show the modal
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -824,37 +844,178 @@ function validatePrice(price, minPrice) {
 // Function to open driver response modal
 function openDriverResponseModal(poolData, requestedPrice) {
     const modal = document.getElementById('driver-response-modal');
-    
+
     // Set the requested price in the UI
     document.querySelectorAll('#requested-price-display, #rejected-price-display').forEach(element => {
         element.textContent = `₹${requestedPrice}`;
     });
-    
+
     // Show loading state
     showDriverResponseState('loading');
-    
+
     // Set counter offer price (for this example, it's higher if user price is too low)
     const suggestedPrice = poolData.price;
     const counterOfferPrice = requestedPrice < suggestedPrice * 0.95 ? Math.round(suggestedPrice * 0.95) : requestedPrice;
     document.getElementById('counter-offer-display').textContent = `₹${counterOfferPrice}`;
     document.getElementById('accepted-price-display').textContent = `₹${requestedPrice}`;
-    
+
     // Simulate driver response after a delay
     setTimeout(() => {
         const willAccept = requestedPrice >= suggestedPrice * 0.95;
-        
+
         // Show appropriate response state
         showDriverResponseState(willAccept ? 'accepted' : 'rejected');
     }, 3000); // 3 second delay to simulate driver response
-    
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
+// Initialize Socket.io connection
+const currentUserId = "testUser123"; // Dummy userId set karo for testing
+
+const socket = io('http://localhost:3000');
+
+socket.emit('register', currentUserId);
+
+socket.on('incoming-negotiation', (data) => {
+    console.log('📢 New negotiation received:', data);
+    alert(`New offer received: ₹${data.offerPrice}`);
+});
+
+
+console.log(`Emitted negotiation event to ${poolOwnerSocketId}`);
+// Offer accepted notification for User
+socket.on('offer-accepted', (data) => {
+    alert('🎉 Your offer was accepted! Ride is confirmed.');
+});
+
+// Offer rejected notification for User
+socket.on('offer-rejected', (data) => {
+    alert('❌ Your offer was rejected.');
+});
+
+// Counter offer notification for User
+socket.on('offer-counter', (data) => {
+    const { counterPrice } = data;
+    alert(`Driver countered your offer: ₹${counterPrice}`);
+});
+
+
+// Modal open karne ka code
+const negotiateBtn = document.getElementById('negotiate-price-btn');
+if (negotiateBtn) {
+    negotiateBtn.addEventListener('click', function () {
+        const price = prompt("Enter your offer price (₹):");
+        if (price) {
+            sendNegotiateRequest(price);
+        }
+    });
+}
+
+function openRideDetails(poolData) {
+    modalBody.innerHTML = `
+        <h4>${poolData.driver.name} (${poolData.driver.rating} ★)</h4>
+        <p><strong>Pickup:</strong> ${poolData.route.pickup}</p>
+        <p><strong>Drop:</strong> ${poolData.route.drop}</p>
+        <p><strong>Vehicle:</strong> ${poolData.vehicle.model} (${poolData.vehicle.color})</p>
+        <p><strong>Seats Available:</strong> ${poolData.seats.available}/${poolData.seats.total}</p>
+        <p><strong>Price:</strong> ₹${poolData.price}</p>
+        <div class="pool-actions">
+            <button id="book-now-btn" class="button primary">Book Now</button>
+            <button id="negotiate-price-btn" class="button secondary">Negotiate Price</button>
+        </div>
+    `;
+
+    // Attach Event Listener Immediately After Modal is Ready
+    setTimeout(() => {
+        const negotiateBtn = document.getElementById('negotiate-price-btn');
+        if (negotiateBtn) {
+            negotiateBtn.addEventListener('click', function () {
+                const price = prompt("Enter your offer price (₹):");
+                if (price) {
+                    sendNegotiateRequest(price);
+                }
+            });
+        }
+    }, 100); // 100ms delay optional to ensure DOM ready
+}
+
+
+// Send negotiate request
+async function sendNegotiateRequest(price) {
+    try {
+        // Validate required parameters
+        if (!price || isNaN(price)) {
+            alert('Invalid price. Please enter a valid number.');
+            return;
+        }
+
+        if (!selectedRideId) {
+            console.error('Error: No ride selected.');
+            alert('No ride selected. Please select a ride before sending a negotiation request.');
+            return;
+        }
+
+        if (!currentUserId) {
+            console.error('Error: User not logged in.');
+            alert('You must be logged in to send a negotiation request.');
+            return;
+        }
+
+        // Prepare request payload
+        const rideId = selectedRideId;
+        const userId = currentUserId;
+        const requestBody = { rideId, userId, offerPrice: price };
+
+        // Make the API call
+        const response = await fetch('/api/negotiate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        // Check HTTP response status
+        if (!response.ok) {
+            console.error('Failed to send negotiation request:', response.statusText);
+            alert('Failed to send negotiation request. Please try again.');
+            return;
+        }
+
+        // Parse response JSON
+        const data = await response.json();
+        if (data.success) {
+            alert('Offer sent! Waiting for driver response.');
+        } else {
+            console.error('Negotiation request failed:', data.message || 'Unknown error');
+            alert('Failed to send offer: ' + (data.message || 'Unknown error occurred.'));
+        }
+    } catch (error) {
+        console.error('Negotiation error:', error);
+        alert('An error occurred while sending the negotiation request. Please try again later.');
+    }
+}
+
+function acceptOffer(negotiationId) {
+    socket.emit('accept-offer', { negotiationId });
+}
+
+function rejectOffer(negotiationId) {
+    socket.emit('reject-offer', { negotiationId });
+}
+
+function counterOffer(negotiationId, counterPrice) {
+    socket.emit('counter-offer', { negotiationId, counterPrice });
+}
+
+
+
 // Function to show specific state in driver response modal
 function showDriverResponseState(state) {
     const states = ['loading', 'accepted', 'rejected'];
-    
+
     states.forEach(s => {
         const element = document.getElementById(`driver-response-${s}`);
         if (element) {
@@ -865,7 +1026,7 @@ function showDriverResponseState(state) {
             }
         }
     });
-    
+
     // Start progress bar animation if in loading state
     if (state === 'loading') {
         const progressBar = document.querySelector('.timer-progress');
@@ -884,43 +1045,43 @@ function setupDriverResponseModalActions() {
     // Handle accepted price button
     const proceedToPaymentBtn = document.getElementById('proceed-to-payment-btn');
     if (proceedToPaymentBtn) {
-        proceedToPaymentBtn.addEventListener('click', function() {
+        proceedToPaymentBtn.addEventListener('click', function () {
             const modal = document.getElementById('driver-response-modal');
             modal.classList.remove('active');
-            
+
             // Get the accepted price from the display
             const acceptedPrice = parseInt(document.getElementById('accepted-price-display').textContent.replace('₹', ''));
             proceedToPayment(currentSelectedPool, acceptedPrice);
         });
     }
-    
+
     // Handle counter offer acceptance
     const acceptCounterOfferBtn = document.getElementById('accept-counter-offer-btn');
     if (acceptCounterOfferBtn) {
-        acceptCounterOfferBtn.addEventListener('click', function() {
+        acceptCounterOfferBtn.addEventListener('click', function () {
             const modal = document.getElementById('driver-response-modal');
             modal.classList.remove('active');
-            
+
             // Get the counter offer price from the display
             const counterOfferPrice = parseInt(document.getElementById('counter-offer-display').textContent.replace('₹', ''));
             proceedToPayment(currentSelectedPool, counterOfferPrice);
         });
     }
-    
+
     // Handle try new price button
     const tryNewPriceBtn = document.getElementById('try-new-price-btn');
     if (tryNewPriceBtn) {
-        tryNewPriceBtn.addEventListener('click', function() {
+        tryNewPriceBtn.addEventListener('click', function () {
             const modal = document.getElementById('driver-response-modal');
             modal.classList.remove('active');
             openPriceNegotiationModal(currentSelectedPool);
         });
     }
-    
+
     // Handle find another driver button
     const findAnotherDriverBtn = document.getElementById('find-another-driver-btn');
     if (findAnotherDriverBtn) {
-        findAnotherDriverBtn.addEventListener('click', function() {
+        findAnotherDriverBtn.addEventListener('click', function () {
             const modal = document.getElementById('driver-response-modal');
             modal.classList.remove('active');
             // This would typically redirect to the ride search or home page
@@ -938,12 +1099,12 @@ function proceedToPayment(poolData, finalPrice) {
         alert(`Payment initiated for ₹${finalPrice}. Payment processing would be implemented here.`);
         return;
     }
-    
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 
     document.getElementById('payment-ride-fare').textContent = `₹${finalPrice}`;
-document.getElementById('payment-total-amount').textContent = `₹${finalPrice}`; // Total = Final Price
+    document.getElementById('payment-total-amount').textContent = `₹${finalPrice}`; // Total = Final Price
 
     document.getElementById('confirm-payment-btn').onclick = function () {
         modal.classList.remove('active');
@@ -964,7 +1125,7 @@ document.getElementById('payment-total-amount').textContent = `₹${finalPrice}`
 }
 const doneBtn = document.getElementById('close-success-modal');
 if (doneBtn) {
-    doneBtn.onclick = function() {
+    doneBtn.onclick = function () {
         document.getElementById('booking-success-modal').classList.remove('active');
         document.body.style.overflow = '';
     };
