@@ -9,7 +9,73 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
+<style>
+    .input-with-icon {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .input-with-icon input {
+        width: 100%;
+        padding: 10px 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+    
+    .location-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgb(0, 0, 0);
+        border: 1px solid #ddd;
+        border-top: none;
+        width: 100%;
+        display: none;
+        z-index: 100;
+        border-radius: 0 0 6px 6px;
+    }
+    
+    .location-menu div {
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    
+    .location-menu div:hover {
+        background-color: #171616;
+    }
+    
+    .location-suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgb(0, 0, 0);
+        border: 1px solid #ddd;
+        border-top: none;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 10;
+        display: none;
+        border-radius: 0 0 6px 6px;
+    }
+    
+    .location-suggestions div {
+        padding: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .location-suggestions div:hover {
+        background: #1a1515;
+    }
+    </style>
+    
+    
+    
 <body>
     <div class="container">
         <nav class="navbar">
@@ -141,28 +207,30 @@
                 <div class="form-group">
                     <label for="starting-point">Starting Point</label>
                     <div class="input-with-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="10" r="3"></circle>
-                            <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"></path>
-                        </svg>
                         <input type="text" id="starting-point" name="starting-point"
-                            placeholder="Enter starting location" required>
+                            placeholder="Enter starting location" autocomplete="off" required>
+                        <i id="get-current-location-start" class="location-icon"></i>
+                        <div id="start-location-menu" class="location-menu">
+                            <div id="use-current-location">📍 Use Current Location</div>
+                        </div>
+                        <div class="location-suggestions" id="start-suggestions"></div>
                     </div>
                 </div>
-
+                
                 <div class="form-group">
                     <label for="destination-point">Destination Point</label>
                     <div class="input-with-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="10" r="3"></circle>
-                            <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z"></path>
-                        </svg>
                         <input type="text" id="destination-point" name="destination-point"
-                            placeholder="Enter destination location" required>
+                            placeholder="Enter destination location" autocomplete="off" required>
+                        <i class="location-icon"></i>
+                        <div class="location-suggestions" id="dest-suggestions"></div>
                     </div>
                 </div>
+                
+                
+                
+                
+                
 
                 <div class="form-row">
                     <div class="form-group">
@@ -596,7 +664,144 @@
             <button class="btn-close-modal">Close</button>
         </div>
     </div>
-
+    <script>
+        // ---- Starting Point Location Suggestion + Current Location ----
+        const startingInput = document.getElementById('starting-point');
+        const locationMenu = document.getElementById('start-location-menu');
+        const startSuggestions = document.getElementById('start-suggestions');
+        
+        let startTimeout; // new
+        startingInput.addEventListener('focus', () => {
+            locationMenu.style.display = 'block';
+        });
+        
+        const useCurrentLocationBtn = document.getElementById('use-current-location');
+        useCurrentLocationBtn.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const { latitude, longitude } = position.coords;
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const address = data.display_name || "Current Location";
+                            startingInput.value = address;
+                            locationMenu.style.display = 'none';
+                            startSuggestions.style.display = 'none';
+                        })
+                        .catch(error => {
+                            console.error("Error fetching address:", error);
+                            locationMenu.style.display = 'none';
+                        });
+                }, (error) => {
+                    console.error("Error getting location:", error);
+                    locationMenu.style.display = 'none';
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+                locationMenu.style.display = 'none';
+            }
+        });
+        
+        startingInput.addEventListener('input', function () {
+            clearTimeout(startTimeout); // clear previous timeout
+        
+            const query = startingInput.value.trim();
+            if (query.length > 2) {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in`)
+                    .then(response => response.json())
+                    .then(data => {
+                        startSuggestions.innerHTML = '';
+                        if (data.length) {
+                            data.forEach(place => {
+                                const div = document.createElement('div');
+                                div.textContent = place.display_name;
+                                div.addEventListener('click', () => {
+                                    startingInput.value = place.display_name;
+                                    startSuggestions.style.display = 'none';
+                                });
+                                startSuggestions.appendChild(div);
+                            });
+                            startSuggestions.style.display = 'block';
+                        } else {
+                            // No suggestions found
+                            const div = document.createElement('div');
+                            div.textContent = "No suggestions found.";
+                            div.style.color = 'red';
+                            startSuggestions.appendChild(div);
+                            startSuggestions.style.display = 'block';
+        
+                            // After 2 sec, auto accept whatever typed
+                            startTimeout = setTimeout(() => {
+                                startSuggestions.style.display = 'none';
+                            }, 2000);
+                        }
+                    })
+                    .catch(error => console.error(error));
+            } else {
+                startSuggestions.style.display = 'none';
+            }
+        });
+        
+        // ---- Destination Point Location Suggestion ----
+        const destinationInput = document.getElementById('destination-point');
+        const destSuggestions = document.getElementById('dest-suggestions');
+        
+        let destTimeout; // new
+        destinationInput.addEventListener('input', function () {
+            clearTimeout(destTimeout);
+        
+            const query = destinationInput.value.trim();
+            if (query.length > 2) {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in`)
+                    .then(response => response.json())
+                    .then(data => {
+                        destSuggestions.innerHTML = '';
+                        if (data.length) {
+                            data.forEach(place => {
+                                const div = document.createElement('div');
+                                div.textContent = place.display_name;
+                                div.addEventListener('click', () => {
+                                    destinationInput.value = place.display_name;
+                                    destSuggestions.style.display = 'none';
+                                });
+                                destSuggestions.appendChild(div);
+                            });
+                            destSuggestions.style.display = 'block';
+                        } else {
+                            // No suggestions found
+                            const div = document.createElement('div');
+                            div.textContent = "No suggestions found.";
+                            div.style.color = 'red';
+                            destSuggestions.appendChild(div);
+                            destSuggestions.style.display = 'block';
+        
+                            // After 2 sec, auto accept whatever typed
+                            destTimeout = setTimeout(() => {
+                                destSuggestions.style.display = 'none';
+                            }, 2000);
+                        }
+                    })
+                    .catch(error => console.error(error));
+            } else {
+                destSuggestions.style.display = 'none';
+            }
+        });
+        
+        // Hide menus when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!startingInput.contains(e.target) && !locationMenu.contains(e.target) && !startSuggestions.contains(e.target)) {
+                locationMenu.style.display = 'none';
+                startSuggestions.style.display = 'none';
+            }
+            if (!destinationInput.contains(e.target) && !destSuggestions.contains(e.target)) {
+                destSuggestions.style.display = 'none';
+            }
+        });
+        </script>
+        
+        
+        
+        
     <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/04/27/02/20250427020203-D5K26AID.js"></script>
 
