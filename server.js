@@ -141,6 +141,29 @@ app.get('/api/rides', async (req, res) => {
     }
 });
 
+app.get("/api/search-rides", async (req, res) => {
+    try {
+        const { startingPoint, destinationPoint } = req.query
+
+        if (!startingPoint || !destinationPoint) {
+            return res.status(400).json({ message: "Starting point and destination point are required" })
+        }
+
+        // Create a search query with case-insensitive regex matching
+        const searchQuery = {
+            startingPoint: { $regex: startingPoint, $options: "i" },
+            destinationPoint: { $regex: destinationPoint, $options: "i" },
+        }
+
+        const rides = await RideOffer.find(searchQuery)
+
+        res.json(rides)
+    } catch (err) {
+        console.error("❌ Error searching rides:", err)
+        res.status(500).json({ message: "Server Error" })
+    }
+})
+
 // Server Start
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
