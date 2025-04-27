@@ -634,7 +634,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update Payment Summary
             document.getElementById('payment-ride-fare').textContent = `₹${poolData.price}`;
-            document.getElementById('payment-total-amount').textContent = `₹${poolData.price + 20}`;
+            document.getElementById('payment-total-amount').textContent = `₹${poolData.price}`;
 
             // Confirm Payment button handling
             const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
