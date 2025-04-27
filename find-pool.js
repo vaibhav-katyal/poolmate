@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // Update booking success modal content
                 document.getElementById('booking-datetime').textContent = `${poolData.route.date} - ${poolData.route.time}`;
-                document.getElementById('booking-amount').textContent = `₹${poolData.price + 20}`;
+                document.getElementById('booking-amount').textContent = `₹${poolData.price }`;
 
                 const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
                 if (selectedMethod && selectedMethod.nextElementSibling) {
@@ -1113,7 +1113,7 @@ function proceedToPayment(poolData, finalPrice) {
         successModal.classList.add('active');
 
         document.getElementById('booking-datetime').textContent = `${poolData.route?.date || '27 Apr, 2025'} - ${poolData.route?.time || '10:00 AM'}`;
-        document.getElementById('booking-amount').textContent = `₹${parseInt(finalPrice) + 20}`;
+        document.getElementById('booking-amount').textContent = `₹${parseInt(finalPrice) }`;
 
         const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked')?.nextElementSibling.querySelector('.payment-name')?.innerText;
         if (selectedPaymentMethod) {
