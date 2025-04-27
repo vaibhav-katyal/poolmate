@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Set today's date as default
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
@@ -7,11 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Toggle Filters
     const toggleFiltersBtn = document.getElementById('toggle-filters');
     const filtersContent = document.querySelector('.filters-content');
+    let fetchedRides = [];  // Global array to store fetched rides
 
-    toggleFiltersBtn.addEventListener('click', function() {
+    toggleFiltersBtn.addEventListener('click', function () {
         filtersContent.classList.toggle('active');
         this.classList.toggle('active');
-        
+
         const text = this.querySelector('span');
         if (filtersContent.classList.contains('active')) {
             text.textContent = 'Hide Filters';
@@ -24,9 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const priceRange = document.getElementById('price-range');
     const priceValue = document.getElementById('price-value');
 
-    priceRange.addEventListener('input', function() {
+    priceRange.addEventListener('input', function () {
         priceValue.textContent = `₹${this.value}`;
-        
+
         // Update slider background
         const percentage = (this.value - this.min) / (this.max - this.min) * 100;
         this.style.background = `linear-gradient(to right, var(--accent-color) 0%, var(--accent-color) ${percentage}%, var(--border-color) ${percentage}%, var(--border-color) 100%)`;
@@ -45,15 +46,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 </svg>
             `;
             currentLocationBtn.classList.add('loading');
-    
+
             navigator.geolocation.getCurrentPosition(
                 function (position) {
                     const lat = position.coords.latitude.toFixed(4);
                     const lng = position.coords.longitude.toFixed(4);
-                    
+
                     // Insert current location coordinates into input
                     document.getElementById('pickup-location').value = `Current Location (${lat}, ${lng})`;
-    
+
                     // Revert button back to original icon
                     currentLocationBtn.innerHTML = `
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 function (error) {
                     alert('Unable to retrieve your location. Please enter manually.');
-    
+
                     // Revert back to original icon even if failed
                     currentLocationBtn.innerHTML = `
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -94,71 +95,119 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Geolocation is not supported by your browser.');
         }
     });
-    
+
 
     // Search Form Submission
-    const searchForm = document.getElementById('search-form');
-    const resultsSection = document.getElementById('results-section');
-    const listView = document.getElementById('list-view');
+    const searchForm = document.getElementById("search-form")
+    const resultsSection = document.getElementById("results-section")
+    const listView = document.getElementById("list-view")
+    const noResults = document.getElementById("no-results")
+
+    searchForm.addEventListener("submit", async function (e) {
+        e.preventDefault()
     
-    searchForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Validate form
-        const pickupLocation = document.getElementById('pickup-location').value;
-        const dropLocation = document.getElementById('drop-location').value;
-        
+        const pickupLocation = document.getElementById("pickup-location").value.trim()
+        const dropLocation = document.getElementById("drop-location").value.trim()
+    
         if (!pickupLocation || !dropLocation) {
-            alert('Please enter both pickup and drop locations');
-            return;
+            alert("Please enter both pickup and drop locations")
+            return
         }
-        
-        // Show loading state
-        const searchButton = this.querySelector('.search-button');
-        const originalButtonText = searchButton.innerHTML;
-        searchButton.innerHTML = `
-            <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="60" stroke-dashoffset="60">
-                    <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
-                </path>
-            </svg>
-            Searching...
-        `;
-        
-        // Simulate API call with timeout
-        setTimeout(function() {
-            // Update progress timeline
-            const progressSteps = document.querySelectorAll('.progress-step');
-            progressSteps[0].classList.add('completed');
-            progressSteps[1].classList.add('active');
-            
-            // Show results section
-            resultsSection.classList.remove('hidden');
-            
-            // Scroll to results
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-            
-            // Generate pool cards
-            generatePoolCards();
-            
-            // Reset search button
-            searchButton.innerHTML = originalButtonText;
-        }, 1500);
-    });
+    
+        const searchButton = this.querySelector(".search-button")
+        const originalButtonText = searchButton.innerHTML
+        searchButton.innerHTML = `<svg class="spinner" ... ></svg> Searching...`
+    
+        try {
+            // 👉 Ye fetch karega database se real data
+            const response = await fetch(`/api/search-rides?startingPoint=${encodeURIComponent(pickupLocation)}&destinationPoint=${encodeURIComponent(dropLocation)}`)
+            const rides = await response.json()
+            fetchedRides = rides; // 👈 Save rides globally here
+    
+            const progressSteps = document.querySelectorAll(".progress-step")
+            progressSteps[0].classList.add("completed")
+            progressSteps[1].classList.add("active")
+    
+            resultsSection.classList.remove("hidden")
+            document.getElementById("results-count").textContent = rides.length
+    
+            if (rides.length > 0) {
+                listView.innerHTML = ""
+                rides.forEach((ride) => {
+                    const poolData = {
+                        id: ride._id,
+                        driver: {
+                            name: ride.driverName,
+                            rating: 4.7,
+                            verified: true,
+                            avatar: ride.driverName
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join(""),
+                        },
+                        route: {
+                            pickup: ride.startingPoint,
+                            drop: ride.destinationPoint,
+                            date: ride.journeyDate,
+                            time: ride.journeyTime,
+                            distance: "~15 km",
+                            duration: "~40 min",
+                        },
+                        vehicle: {
+                            model: ride.vehicleName,
+                            color: ride.vehicleColor,
+                            number: ride.numberPlate,
+                            features: ["AC", `${ride.seatingCapacity} Seats`],
+                        },
+                        seats: {
+                            available: ride.availableSeats,
+                            total: ride.seatingCapacity,
+                        },
+                        price: ride.seatPrice,
+                        features: [],
+                    }
+                    listView.innerHTML += generatePoolCard(poolData)
+                })
+    
+                listView.classList.remove("hidden")
+                noResults.classList.add("hidden")
+                addPoolCardEventListeners()
+            } else {
+                listView.classList.add("hidden")
+                noResults.classList.remove("hidden")
+            }
+    
+            resultsSection.scrollIntoView({ behavior: "smooth" })
+        } catch (error) {
+            console.error("❌ Error fetching rides:", error)
+            alert("Something went wrong while searching rides!")
+        } finally {
+            searchButton.innerHTML = originalButtonText
+        }
+    })
+    
+
+    // Modify Search button in No Results section
+    document.getElementById("modify-search-btn").addEventListener("click", () => {
+        // Hide results section and scroll back to search form
+        resultsSection.classList.add("hidden")
+        document.querySelector(".search-form-container").scrollIntoView({ behavior: "smooth" })
+    })
+
 
     // View Toggle
     const listViewBtn = document.getElementById('list-view-btn');
     const mapViewBtn = document.getElementById('map-view-btn');
     const mapView = document.getElementById('map-view');
-    
-    listViewBtn.addEventListener('click', function() {
+
+    listViewBtn.addEventListener('click', function () {
         listViewBtn.classList.add('active');
         mapViewBtn.classList.remove('active');
         listView.classList.remove('hidden');
         mapView.classList.add('hidden');
     });
-    
-    mapViewBtn.addEventListener('click', function() {
+
+    mapViewBtn.addEventListener('click', function () {
         mapViewBtn.classList.add('active');
         listViewBtn.classList.remove('active');
         mapView.classList.remove('hidden');
@@ -168,19 +217,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Map Pins Click Event
     const mapPins = document.querySelectorAll('.map-pin');
     const mapListView = document.getElementById('map-list-view');
-    
+
     mapPins.forEach(pin => {
-        pin.addEventListener('click', function() {
+        pin.addEventListener('click', function () {
             const poolId = this.getAttribute('data-id');
             const poolData = getPoolData(poolId);
-            
+
             // Highlight active pin
             mapPins.forEach(p => p.classList.remove('active'));
             this.classList.add('active');
-            
+
             // Show pool details in map list view
             mapListView.innerHTML = generatePoolCard(poolData);
-            
+
             // Add event listeners to the newly created card
             addPoolCardEventListeners();
         });
@@ -188,25 +237,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Pool Details Modal
     const modal = document.getElementById('pool-details-modal');
-    
+
     // Close modal when clicking outside
-    modal.addEventListener('click', function(e) {
+    modal.addEventListener('click', function (e) {
         if (e.target === modal) {
             closeModal();
         }
     });
-    
+
     // Close modal with escape key
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             closeModal();
         }
     });
-    
+
     // Close modal button
     const closeModalBtn = document.querySelector('.close-modal');
     closeModalBtn.addEventListener('click', closeModal);
-    
+
     function closeModal() {
         modal.classList.remove('active');
         document.body.style.overflow = '';
@@ -215,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Generate Pool Cards
     function generatePoolCards() {
         listView.innerHTML = '';
-        
+
         // Sample pool data
         const pools = [
             {
@@ -364,12 +413,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 features: ['AC']
             }
         ];
-        
+
         // Generate cards
         pools.forEach(pool => {
             listView.innerHTML += generatePoolCard(pool);
         });
-        
+
         // Add event listeners to all pool cards
         addPoolCardEventListeners();
     }
@@ -473,9 +522,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function addPoolCardEventListeners() {
         const poolCards = document.querySelectorAll('.pool-card');
         const viewDetailsButtons = document.querySelectorAll('.view-details-btn');
-        
+
         poolCards.forEach(card => {
-            card.addEventListener('click', function(e) {
+            card.addEventListener('click', function (e) {
                 if (!e.target.closest('.view-details-btn')) {
                     const poolId = this.getAttribute('data-id');
                     const poolData = getPoolData(poolId);
@@ -483,9 +532,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-        
+
         viewDetailsButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
+            button.addEventListener('click', function (e) {
                 e.stopPropagation();
                 const poolId = this.closest('.pool-card').getAttribute('data-id');
                 const poolData = getPoolData(poolId);
@@ -495,163 +544,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getPoolData(poolId) {
-        // In a real app, this would fetch data from an API
-        // For demo purposes, we'll use hardcoded data
-        const pools = {
-            'pool-1': {
-                id: 'pool-1',
-                driver: {
-                    name: 'Rahul Singh',
-                    rating: 4.8,
-                    verified: true,
-                    avatar: 'RS'
-                },
-                route: {
-                    pickup: 'Indiranagar, Bangalore',
-                    drop: 'Electronic City, Bangalore',
-                    date: '26 Apr, 2023',
-                    time: '09:30 AM',
-                    distance: '18 km',
-                    duration: '45 min'
-                },
-                vehicle: {
-                    model: 'Honda City',
-                    color: 'White',
-                    number: 'KA 01 AB 1234',
-                    features: ['AC', '4 Seats', 'Music System']
-                },
-                seats: {
-                    available: 3,
-                    total: 4
-                },
-                price: 180,
-                features: ['Ladies Only', 'AC']
+        // Find in fetched rides
+        const ride = fetchedRides.find((r) => r._id === poolId);
+    
+        if (!ride) {
+            console.error(`Ride not found for id: ${poolId}`);
+            return null;
+        }
+    
+        // Prepare data in expected format
+        const poolData = {
+            id: ride._id,
+            driver: {
+                name: ride.driverName,
+                rating: 4.7,
+                verified: true,
+                avatar: ride.driverName
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join(""),
             },
-            'pool-2': {
-                id: 'pool-2',
-                driver: {
-                    name: 'Priya Sharma',
-                    rating: 4.9,
-                    verified: true,
-                    avatar: 'PS'
-                },
-                route: {
-                    pickup: 'Koramangala, Bangalore',
-                    drop: 'Whitefield, Bangalore',
-                    date: '26 Apr, 2023',
-                    time: '10:00 AM',
-                    distance: '15 km',
-                    duration: '40 min'
-                },
-                vehicle: {
-                    model: 'Maruti Swift',
-                    color: 'Silver',
-                    number: 'KA 05 CD 5678',
-                    features: ['AC', '3 Seats', 'Music System']
-                },
-                seats: {
-                    available: 2,
-                    total: 3
-                },
-                price: 150,
-                features: ['AC']
+            route: {
+                pickup: ride.startingPoint,
+                drop: ride.destinationPoint,
+                date: ride.journeyDate,
+                time: ride.journeyTime,
+                distance: "~15 km",
+                duration: "~40 min",
             },
-            'pool-3': {
-                id: 'pool-3',
-                driver: {
-                    name: 'Amit Kumar',
-                    rating: 4.7,
-                    verified: false,
-                    avatar: 'AK'
-                },
-                route: {
-                    pickup: 'HSR Layout, Bangalore',
-                    drop: 'Marathahalli, Bangalore',
-                    date: '26 Apr, 2023',
-                    time: '11:30 AM',
-                    distance: '10 km',
-                    duration: '30 min'
-                },
-                vehicle: {
-                    model: 'Hyundai i20',
-                    color: 'Blue',
-                    number: 'KA 03 EF 9012',
-                    features: ['AC', '3 Seats']
-                },
-                seats: {
-                    available: 3,
-                    total: 3
-                },
-                price: 120,
-                features: ['AC']
+            vehicle: {
+                model: ride.vehicleName,
+                color: ride.vehicleColor,
+                number: ride.numberPlate,
+                features: ["AC", `${ride.seatingCapacity} Seats`],
             },
-            'pool-4': {
-                id: 'pool-4',
-                driver: {
-                    name: 'Neha Gupta',
-                    rating: 4.6,
-                    verified: true,
-                    avatar: 'NG'
-                },
-                route: {
-                    pickup: 'JP Nagar, Bangalore',
-                    drop: 'MG Road, Bangalore',
-                    date: '26 Apr, 2023',
-                    time: '01:00 PM',
-                    distance: '12 km',
-                    duration: '35 min'
-                },
-                vehicle: {
-                    model: 'Toyota Etios',
-                    color: 'White',
-                    number: 'KA 02 GH 3456',
-                    features: ['AC', '3 Seats', 'Music System']
-                },
-                seats: {
-                    available: 2,
-                    total: 3
-                },
-                price: 140,
-                features: ['Ladies Only', 'AC']
+            seats: {
+                available: ride.availableSeats,
+                total: ride.seatingCapacity,
             },
-            'pool-5': {
-                id: 'pool-5',
-                driver: {
-                    name: 'Vikram Reddy',
-                    rating: 4.5,
-                    verified: true,
-                    avatar: 'VR'
-                },
-                route: {
-                    pickup: 'Jayanagar, Bangalore',
-                    drop: 'Hebbal, Bangalore',
-                    date: '26 Apr, 2023',
-                    time: '02:30 PM',
-                    distance: '20 km',
-                    duration: '50 min'
-                },
-                vehicle: {
-                    model: 'Mahindra XUV300',
-                    color: 'Black',
-                    number: 'KA 04 IJ 7890',
-                    features: ['AC', '4 Seats', 'Music System']
-                },
-                seats: {
-                    available: 3,
-                    total: 4
-                },
-                price: 200,
-                features: ['AC']
-            }
+            price: ride.seatPrice,
+            features: [],
         };
-
-        return pools[poolId];
+    
+        return poolData;
     }
 
     function showPoolDetails(poolData) {
         const rideModal = document.getElementById('pool-details-modal');
         const modalBody = rideModal.querySelector('.modal-body');
-    
+
         // Fill Ride Details
         modalBody.innerHTML = `
             <h4>${poolData.driver.name} (${poolData.driver.rating} ★)</h4>
@@ -662,59 +603,59 @@ document.addEventListener('DOMContentLoaded', function() {
             <p><strong>Price:</strong> ₹${poolData.price}</p>
             <button id="book-now-btn" class="button primary">Book Now</button>
         `;
-    
+
         // Open Ride Details Modal
         rideModal.classList.add('active');
         document.body.style.overflow = 'hidden';
-    
+
         // Book Now button handling
         const bookNowButton = document.getElementById('book-now-btn');
-        bookNowButton.addEventListener('click', function() {
+        bookNowButton.addEventListener('click', function () {
             // Close Ride Modal
             rideModal.classList.remove('active');
-    
+
             // Open Payment Modal
             const paymentModal = document.getElementById('payment-method-modal');
             paymentModal.classList.add('active');
             document.body.style.overflow = 'hidden';
-    
+
             // Update Payment Summary
             document.getElementById('payment-ride-fare').textContent = `₹${poolData.price}`;
             document.getElementById('payment-total-amount').textContent = `₹${poolData.price + 20}`;
-    
+
             // Confirm Payment button handling
             const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
-            confirmPaymentBtn.onclick = function() {
+            confirmPaymentBtn.onclick = function () {
                 // Close Payment Modal
                 paymentModal.classList.remove('active');
-    
+
                 // Open Booking Success Modal
                 const successModal = document.getElementById('booking-success-modal');
                 successModal.classList.add('active');
-    
+
                 // Update booking success modal content
                 document.getElementById('booking-datetime').textContent = `${poolData.route.date} - ${poolData.route.time}`;
                 document.getElementById('booking-amount').textContent = `₹${poolData.price + 20}`;
                 const selectedMethod = document.querySelector('input[name="payment-method"]:checked')
                     .nextElementSibling.querySelector('.payment-name').textContent;
                 document.getElementById('booking-payment-method').textContent = selectedMethod;
-    
+
                 document.body.style.overflow = 'hidden';
             };
         });
-    
+
         // All modal close buttons (X buttons)
         document.querySelectorAll('.close-modal').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 this.closest('.modal').classList.remove('active');
                 document.body.style.overflow = '';
             });
         });
-    
+
         // Done button in Success Modal
         const doneBtn = document.getElementById('close-success-modal');
         if (doneBtn) {
-            doneBtn.onclick = function() {
+            doneBtn.onclick = function () {
                 document.getElementById('booking-success-modal').classList.remove('active');
                 document.body.style.overflow = '';
             };
@@ -837,14 +778,14 @@ function showPoolDetails(poolData) {
     // Price negotiation slider
     const negotiationRange = document.getElementById('negotiation-range');
     const negotiatedPrice = document.getElementById('negotiated-price');
-    
-    negotiationRange.addEventListener('input', function() {
+
+    negotiationRange.addEventListener('input', function () {
         negotiatedPrice.textContent = `₹${this.value}`;
     });
 
     // Send offer button
     const sendOfferBtn = document.getElementById('send-offer-btn');
-    sendOfferBtn.addEventListener('click', function() {
+    sendOfferBtn.addEventListener('click', function () {
         // Simulate driver response (randomly accept or reject)
         const isAccepted = Math.random() > 0.5;
         showNegotiationResponse(isAccepted, negotiationRange.value, poolData);
@@ -852,7 +793,7 @@ function showPoolDetails(poolData) {
 
     // Book at original price button
     const bookNowBtn = document.getElementById('book-now-btn');
-    bookNowBtn.addEventListener('click', function() {
+    bookNowBtn.addEventListener('click', function () {
         proceedToPayment(poolData, poolData.price);
     });
 }
@@ -869,31 +810,31 @@ function showNegotiationResponse(isAccepted, offeredPrice, poolData) {
     if (isAccepted) {
         acceptedSection.style.display = 'block';
         rejectedSection.style.display = 'none';
-        
+
         // Proceed with negotiated price button
         const proceedBtn = document.getElementById('proceed-with-negotiated-price');
-        proceedBtn.onclick = function() {
+        proceedBtn.onclick = function () {
             responseModal.classList.remove('active');
             proceedToPayment(poolData, offeredPrice);
         };
     } else {
         acceptedSection.style.display = 'none';
         rejectedSection.style.display = 'block';
-        
+
         // Generate a counter offer (slightly higher than user's offer)
         const counterOffer = Math.min(poolData.price, Math.round(parseInt(offeredPrice) * 1.1 / 10) * 10);
         document.getElementById('counter-offer-price').textContent = `₹${counterOffer}`;
-        
+
         // Accept counter offer button
         const acceptCounterBtn = document.getElementById('accept-counter-offer');
-        acceptCounterBtn.onclick = function() {
+        acceptCounterBtn.onclick = function () {
             responseModal.classList.remove('active');
             proceedToPayment(poolData, counterOffer);
         };
-        
+
         // Reject counter offer button
         const rejectCounterBtn = document.getElementById('reject-counter-offer');
-        rejectCounterBtn.onclick = function() {
+        rejectCounterBtn.onclick = function () {
             responseModal.classList.remove('active');
             document.getElementById('pool-details-modal').classList.add('active');
         };
@@ -904,7 +845,7 @@ function showNegotiationResponse(isAccepted, offeredPrice, poolData) {
 
     // Close modal button
     const closeModalBtn = responseModal.querySelector('.close-modal');
-    closeModalBtn.addEventListener('click', function() {
+    closeModalBtn.addEventListener('click', function () {
         responseModal.classList.remove('active');
         document.body.style.overflow = '';
     });
@@ -923,7 +864,7 @@ function proceedToPayment(poolData, finalPrice) {
 
     // Confirm Payment button handling
     const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
-    confirmPaymentBtn.onclick = function() {
+    confirmPaymentBtn.onclick = function () {
         // Close Payment Modal
         paymentModal.classList.remove('active');
 
@@ -1043,5 +984,48 @@ function generatePoolCard(pool) {
         </div>
     `;
 }
+
+function searchWithMockData(pickupLocation, dropLocation) {
+    // Mock data for testing
+    const mockRides = [
+      {
+        _id: "ride1",
+        driverName: "Rahul Singh",
+        startingPoint: "Indiranagar, Bangalore",
+        destinationPoint: "Electronic City, Bangalore",
+        journeyDate: "26 Apr, 2023",
+        journeyTime: "09:30 AM",
+        vehicleName: "Honda City",
+        vehicleColor: "White",
+        numberPlate: "KA 01 AB 1234",
+        seatingCapacity: 4,
+        availableSeats: 3,
+        seatPrice: 180,
+      },
+      {
+        _id: "ride2",
+        driverName: "Priya Sharma",
+        startingPoint: "Koramangala, Bangalore",
+        destinationPoint: "Whitefield, Bangalore",
+        journeyDate: "26 Apr, 2023",
+        journeyTime: "10:00 AM",
+        vehicleName: "Maruti Swift",
+        vehicleColor: "Silver",
+        numberPlate: "KA 05 CD 5678",
+        seatingCapacity: 3,
+        availableSeats: 2,
+        seatPrice: 150,
+      },
+    ]
+  
+    // Filter the mock rides based on search criteria
+    const filteredRides = mockRides.filter(
+      (ride) =>
+        ride.startingPoint.toLowerCase().includes(pickupLocation.toLowerCase()) &&
+        ride.destinationPoint.toLowerCase().includes(dropLocation.toLowerCase()),
+    )
+  
+    return filteredRides
+  }
 
 // Add these CSS styles for the negotiable badge
