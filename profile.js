@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Retrieve username from local storage
+    const username = localStorage.getItem('userName') || 'Guest'; // Default to 'Guest' if not found
+
+    // Update the profile name element
+    const profileNameElement = document.querySelector('.profile-name'); // Adjust the selector to match your HTML
+    if (profileNameElement) {
+        profileNameElement.textContent = username;
+    }
+
     // Theme Toggle
     const themeToggle = document.getElementById('theme-toggle');
 

@@ -208,7 +208,7 @@
   
   .current-location-btn {
     position: absolute;
-    right: 12px;
+    right: 33px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
