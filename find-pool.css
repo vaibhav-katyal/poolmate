@@ -1826,3 +1826,135 @@
         align-items: flex-start;
     }
 }
+/* Price Negotiation Styles */
+.price-negotiation {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--input-background);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.price-negotiation h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: var(--accent-color);
+}
+
+.price-negotiation p {
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.negotiation-slider {
+  margin-bottom: 20px;
+}
+
+.price-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+#negotiated-price {
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.negotiation-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.negotiation-actions button {
+  flex: 1;
+}
+
+/* Negotiation Response Modal */
+.negotiation-response {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.response-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.response-icon.accepted {
+  background-color: rgba(var(--success-rgb), 0.1);
+  color: var(--success-color);
+}
+
+.response-icon.rejected {
+  background-color: rgba(var(--error-rgb), 0.1);
+  color: var(--error-color);
+}
+
+.negotiation-response h3 {
+  margin-bottom: 10px;
+}
+
+.negotiation-response p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.counter-offer {
+  background-color: var(--input-background);
+  border-radius: var(--border-radius-md);
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.counter-offer p {
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+#counter-offer-price {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+.counter-offer-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.counter-offer-actions button {
+  flex: 1;
+}
+
+/* Fix for route-point-value text overflow */
+.route-point-value {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Make pool cards more responsive */
+@media (max-width: 576px) {
+  .pool-card {
+      padding: 15px;
+  }
+  
+  .route-points {
+      flex-direction: column;
+      gap: 10px;
+  }
+  
+  .route-connector {
+      display: none;
+  }
+}
