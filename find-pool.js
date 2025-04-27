@@ -1092,10 +1092,8 @@ function setupDriverResponseModalActions() {
 
 // Proceed to payment
 function proceedToPayment(poolData, finalPrice) {
-    // Check if the payment modal exists
     const modal = document.getElementById('payment-method-modal');
     if (!modal) {
-        // Create a simple alert if payment modal doesn't exist in the current implementation
         alert(`Payment initiated for ₹${finalPrice}. Payment processing would be implemented here.`);
         return;
     }
@@ -1104,7 +1102,7 @@ function proceedToPayment(poolData, finalPrice) {
     document.body.style.overflow = 'hidden';
 
     document.getElementById('payment-ride-fare').textContent = `₹${finalPrice}`;
-    document.getElementById('payment-total-amount').textContent = `₹${finalPrice}`; // Total = Final Price
+    document.getElementById('payment-total-amount').textContent = `₹${finalPrice}`;
 
     document.getElementById('confirm-payment-btn').onclick = function () {
         modal.classList.remove('active');
@@ -1113,7 +1111,7 @@ function proceedToPayment(poolData, finalPrice) {
         successModal.classList.add('active');
 
         document.getElementById('booking-datetime').textContent = `${poolData.route?.date || '27 Apr, 2025'} - ${poolData.route?.time || '10:00 AM'}`;
-        document.getElementById('booking-amount').textContent = `₹${parseInt(finalPrice) }`;
+        document.getElementById('booking-amount').textContent = `₹${parseInt(finalPrice)}`;
 
         const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked')?.nextElementSibling.querySelector('.payment-name')?.innerText;
         if (selectedPaymentMethod) {
@@ -1121,21 +1119,23 @@ function proceedToPayment(poolData, finalPrice) {
         }
 
         document.body.style.overflow = 'hidden';
-    };
-}
-const doneBtn = document.getElementById('close-success-modal');
-if (doneBtn) {
-    doneBtn.onclick = function () {
-        successModal.classList.remove('active');
-        document.body.style.overflow = '';
-    };
-}
 
-const viewBookingsBtn = document.getElementById('view-bookings-btn');
-if (viewBookingsBtn) {
-    viewBookingsBtn.onclick = function () {
-        alert('Feature coming soon: View your bookings!');
-        successModal.classList.remove('active');
-        document.body.style.overflow = '';
+        // ✅ Move done button and view bookings button event listener inside after success modal appears
+        const doneBtn = document.getElementById('close-success-modal');
+        if (doneBtn) {
+            doneBtn.onclick = function () {
+                successModal.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+        }
+
+        const viewBookingsBtn = document.getElementById('view-bookings-btn');
+        if (viewBookingsBtn) {
+            viewBookingsBtn.onclick = function () {
+                alert('Feature coming soon: View your bookings!');
+                successModal.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+        }
     };
 }
