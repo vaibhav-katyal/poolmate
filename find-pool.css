@@ -1958,3 +1958,24 @@
       display: none;
   }
 }
+#drop-suggestions {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 999;
+  margin-top: 4px; /* To separate the suggestions from the input */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: gives a drop shadow for better visibility */
+}
+
+.suggestion {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.suggestion:hover {
+  background-color: #f0f0f0;
+}
