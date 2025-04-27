@@ -721,228 +721,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-// Function to show pool details with negotiation feature
-function showPoolDetails(poolData) {
-    const modal = document.getElementById('pool-details-modal');
-    const modalBody = modal.querySelector('.modal-body');
+// Add this to your existing JavaScript file
 
-    // Fill ride details with negotiation section
-    modalBody.innerHTML = `
-        <div class="pool-details">
-            <div class="driver-info">
-                <div class="driver-avatar">${poolData.driver.avatar}</div>
-                <div class="driver-details">
-                    <div class="driver-name">${poolData.driver.name}
-                        ${poolData.driver.verified ? `
-                            <span class="verified-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
-                                </svg>
-                                Verified
-                            </span>
-                        ` : ''}
-                    </div>
-                    <div class="driver-rating">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="#FFD700"/>
-                        </svg>
-                        ${poolData.driver.rating} (${Math.floor(Math.random() * 100) + 50} rides)
-                    </div>
-                </div>
-            </div>
-            
-            <div class="route-info">
-                <div class="route-points">
-                    <div class="route-point">
-                        <div class="route-point-label">Pickup</div>
-                        <div class="route-point-value">${poolData.route.pickup}</div>
-                    </div>
-                    <div class="route-connector">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="route-point">
-                        <div class="route-point-label">Drop</div>
-                        <div class="route-point-value">${poolData.route.drop}</div>
-                    </div>
-                </div>
-                
-                <div class="route-details">
-                    <div class="route-detail">
-                        <div class="route-detail-label">Date</div>
-                        <div class="route-detail-value">${poolData.route.date}</div>
-                    </div>
-                    <div class="route-detail">
-                        <div class="route-detail-label">Time</div>
-                        <div class="route-detail-value">${poolData.route.time}</div>
-                    </div>
-                    <div class="route-detail">
-                        <div class="route-detail-label">Distance</div>
-                        <div class="route-detail-value">${poolData.route.distance}</div>
-                    </div>
-                    <div class="route-detail">
-                        <div class="route-detail-label">Duration</div>
-                        <div class="route-detail-value">${poolData.route.duration}</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="vehicle-info">
-                <div class="route-detail-label">Vehicle</div>
-                <div class="route-detail-value">${poolData.vehicle.model} (${poolData.vehicle.color}) - ${poolData.vehicle.number}</div>
-                <div class="vehicle-features">
-                    ${poolData.vehicle.features.map(feature => `
-                        <span class="vehicle-feature">${feature}</span>
-                    `).join('')}
-                </div>
-            </div>
-            
-            <div class="seats-info">
-                <div class="route-detail-label">Seats Available</div>
-                <div class="route-detail-value">${poolData.seats.available}/${poolData.seats.total}</div>
-            </div>
-            
-            <div class="price-info">
-                <div class="route-detail-label">Price per person</div>
-                <div class="route-detail-value price-value">₹${poolData.price}</div>
-            </div>
-        </div>
-        
-        <!-- Price Negotiation Section -->
-        <div id="price-negotiation" class="price-negotiation">
-            <h4>Negotiate Price</h4>
-            <p>Suggest your price to the driver</p>
-            <div class="negotiation-slider">
-                <input type="range" id="negotiation-range" min="50" max="300" step="10" value="${poolData.price}">
-                <div class="price-labels">
-                    <span>₹50</span>
-                    <span id="negotiated-price">₹${poolData.price}</span>
-                    <span>₹300</span>
-                </div>
-            </div>
-            <div class="negotiation-actions">
-                <button id="send-offer-btn" class="button primary">Send Offer</button>
-                <button id="book-now-btn" class="button secondary">Book at Original Price</button>
-            </div>
-        </div>
-    `;
-
-    // Show modal
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-
-    // Price negotiation slider
-    const negotiationRange = document.getElementById('negotiation-range');
-    const negotiatedPrice = document.getElementById('negotiated-price');
-    
-    negotiationRange.addEventListener('input', function() {
-        negotiatedPrice.textContent = `₹${this.value}`;
-    });
-
-    // Send offer button
-    const sendOfferBtn = document.getElementById('send-offer-btn');
-    sendOfferBtn.addEventListener('click', function() {
-        // Simulate driver response (randomly accept or reject)
-        const isAccepted = Math.random() > 0.5;
-        showNegotiationResponse(isAccepted, negotiationRange.value, poolData);
-    });
-
-    // Book at original price button
-    const bookNowBtn = document.getElementById('book-now-btn');
-    bookNowBtn.addEventListener('click', function() {
-        proceedToPayment(poolData, poolData.price);
-    });
-}
-
-// Function to show negotiation response
-function showNegotiationResponse(isAccepted, offeredPrice, poolData) {
-    const modal = document.getElementById('pool-details-modal');
-    modal.classList.remove('active');
-
-    const responseModal = document.getElementById('negotiation-response-modal');
-    const acceptedSection = document.getElementById('negotiation-accepted');
-    const rejectedSection = document.getElementById('negotiation-rejected');
-
-    if (isAccepted) {
-        acceptedSection.style.display = 'block';
-        rejectedSection.style.display = 'none';
-        
-        // Proceed with negotiated price button
-        const proceedBtn = document.getElementById('proceed-with-negotiated-price');
-        proceedBtn.onclick = function() {
-            responseModal.classList.remove('active');
-            proceedToPayment(poolData, offeredPrice);
-        };
-    } else {
-        acceptedSection.style.display = 'none';
-        rejectedSection.style.display = 'block';
-        
-        // Generate a counter offer (slightly higher than user's offer)
-        const counterOffer = Math.min(poolData.price, Math.round(parseInt(offeredPrice) * 1.1 / 10) * 10);
-        document.getElementById('counter-offer-price').textContent = `₹${counterOffer}`;
-        
-        // Accept counter offer button
-        const acceptCounterBtn = document.getElementById('accept-counter-offer');
-        acceptCounterBtn.onclick = function() {
-            responseModal.classList.remove('active');
-            proceedToPayment(poolData, counterOffer);
-        };
-        
-        // Reject counter offer button
-        const rejectCounterBtn = document.getElementById('reject-counter-offer');
-        rejectCounterBtn.onclick = function() {
-            responseModal.classList.remove('active');
-            document.getElementById('pool-details-modal').classList.add('active');
-        };
-    }
-
-    responseModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-
-    // Close modal button
-    const closeModalBtn = responseModal.querySelector('.close-modal');
-    closeModalBtn.addEventListener('click', function() {
-        responseModal.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-}
-
-// Function to proceed to payment
-function proceedToPayment(poolData, finalPrice) {
-    // Open Payment Modal
-    const paymentModal = document.getElementById('payment-method-modal');
-    paymentModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-
-    // Update Payment Summary with negotiated price
-    document.getElementById('payment-ride-fare').textContent = `₹${finalPrice}`;
-    document.getElementById('payment-total-amount').textContent = `₹${parseInt(finalPrice) + 20}`;
-
-    // Confirm Payment button handling
-    const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
-    confirmPaymentBtn.onclick = function() {
-        // Close Payment Modal
-        paymentModal.classList.remove('active');
-
-        // Open Booking Success Modal
-        const successModal = document.getElementById('booking-success-modal');
-        successModal.classList.add('active');
-
-        // Update booking success modal content
-        document.getElementById('booking-datetime').textContent = `${poolData.route.date} - ${poolData.route.time}`;
-        document.getElementById('booking-amount').textContent = `₹${parseInt(finalPrice) + 20}`;
-        const selectedMethod = document.querySelector('input[name="payment-method"]:checked')
-            .nextElementSibling.querySelector('.payment-name').textContent;
-        document.getElementById('booking-payment-method').textContent = selectedMethod;
-
-        document.body.style.overflow = 'hidden';
-    };
-}
-
-// Update the generatePoolCard function to include a negotiable badge
+// Function to generate pool cards with negotiable badge
 function generatePoolCard(pool) {
     return `
         <div class="pool-card" data-id="${pool.id}">
@@ -953,95 +734,297 @@ function generatePoolCard(pool) {
                 </svg>
                 Negotiable
             </div>
-            <div class="driver-info">
-                <div class="driver-avatar">${pool.driver.avatar}</div>
-                <div class="driver-details">
-                    <div class="driver-name">${pool.driver.name}
-                        ${pool.driver.verified ? `
-                            <span class="verified-badge">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
-                                </svg>
-                                Verified
-                            </span>
-                        ` : ''}
-                    </div>
-                    <div class="driver-rating">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="#FFD700"/>
-                        </svg>
-                        ${pool.driver.rating} (${Math.floor(Math.random() * 100) + 50} rides)
-                    </div>
-                </div>
-            </div>
-            <div class="route-info">
-                <div class="route-points">
-                    <div class="route-point">
-                        <div class="route-point-label">Pickup</div>
-                        <div class="route-point-value">${pool.route.pickup}</div>
-                    </div>
-                    <div class="route-connector">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <div class="route-point">
-                        <div class="route-point-label">Drop</div>
-                        <div class="route-point-value">${pool.route.drop}</div>
-                    </div>
-                </div>
-                <div class="route-details">
-                    <div class="route-detail">
-                        <div class="route-detail-label">Date</div>
-                        <div class="route-detail-value">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M16 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M8 2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            ${pool.route.date}
-                        </div>
-                    </div>
-                    <div class="route-detail">
-                        <div class="route-detail-label">Time</div>
-                        <div class="route-detail-value">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            ${pool.route.time}
-                        </div>
-                    </div>
-                    <div class="route-detail">
-                        <div class="route-detail-label">Seats</div>
-                        <div class="route-detail-value">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            ${pool.seats.available}/${pool.seats.total}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pool-card-footer">
-                <div class="price-info">
-                    <div class="price-label">Price per person</div>
-                    <div class="price-value">₹${pool.price}</div>
-                </div>
-                <button class="view-details-btn">
-                    View Details
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
+            <!-- Rest of your pool card HTML -->
         </div>
     `;
 }
 
-// Add these CSS styles for the negotiable badge
+// Add a "Negotiate Price" button to the pool details modal
+// Global variables
+let currentSelectedPool = null;
+
+// Initialize event listeners when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the main negotiate price button if it exists on the page
+    const negotiatePriceBtn = document.getElementById('negotiate-price-btn');
+    if (negotiatePriceBtn) {
+        negotiatePriceBtn.addEventListener('click', function() {
+            // If we don't have pool data yet, use a default for testing
+            const defaultPool = {
+                price: 180,
+                route: {
+                    pickup: "Current Location",
+                    drop: "Destination",
+                    date: "27 Apr, 2025",
+                    time: "10:00 AM"
+                }
+            };
+            openPriceNegotiationModal(currentSelectedPool || defaultPool);
+        });
+    }
+
+    // Initialize close buttons for all modals
+    const closeButtons = document.querySelectorAll('.close-modal');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const modal = this.closest('.modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
+    // Setup driver response modal actions
+    setupDriverResponseModalActions();
+});
+
+// Function to show pool details modal
+function showPoolDetails(poolData) {
+    const modal = document.getElementById('pool-details-modal');
+    const modalBody = modal.querySelector('.modal-body');
+
+    currentSelectedPool = poolData; // Store the selected pool data
+
+    modalBody.innerHTML = `
+        <div class="pool-details">
+            <div class="booking-actions">
+                <button id="negotiate-price-btn" class="button secondary">Negotiate Price</button>
+                <button id="book-now-btn" class="button primary">Book Now</button>
+            </div>
+        </div>
+    `;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Event Listeners
+    document.getElementById('negotiate-price-btn').addEventListener('click', function () {
+        modal.classList.remove('active');
+        openPriceNegotiationModal(currentSelectedPool); // Open price negotiation modal
+    });
+
+    document.getElementById('book-now-btn').addEventListener('click', function () {
+        modal.classList.remove('active');
+        proceedToPayment(currentSelectedPool, currentSelectedPool.price); // Proceed to payment
+    });
+}
+
+// Function to open price negotiation modal
+function openPriceNegotiationModal(poolData) {
+    const modal = document.getElementById('price-negotiation-modal');
+
+    // Fill ride info
+    document.getElementById('negotiation-pickup').textContent = poolData.route.pickup;
+    document.getElementById('negotiation-dropoff').textContent = poolData.route.drop;
+    document.getElementById('negotiation-distance').textContent = "10 km"; // Placeholder
+    document.getElementById('negotiation-duration').textContent = "25 min"; // Placeholder
+    document.getElementById('suggested-price').textContent = `₹${poolData.price}`;
+
+    const suggestedPrice = poolData.price;
+    const minPrice = Math.round(suggestedPrice * 0.8);
+
+    const customPriceInput = document.getElementById('custom-price-input');
+    customPriceInput.value = suggestedPrice;
+    customPriceInput.min = minPrice;
+    customPriceInput.placeholder = `Min ₹${minPrice}`;
+
+    const quickPriceButtons = document.querySelectorAll('.quick-price-btn');
+    quickPriceButtons.forEach(button => {
+        button.classList.remove('active');
+        if (button.dataset.priceFactor == "1") button.classList.add('active');
+
+        button.onclick = function () {
+            const factor = parseFloat(this.dataset.priceFactor);
+            const newPrice = Math.round(suggestedPrice * factor);
+            customPriceInput.value = newPrice;
+            quickPriceButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            validatePrice(newPrice, minPrice); // Validate the price
+        }
+    });
+
+    customPriceInput.oninput = function () {
+        validatePrice(parseInt(this.value) || 0, minPrice); // Validate custom input price, handle empty input
+    };
+
+    document.getElementById('send-price-request-btn').onclick = function () {
+        modal.classList.remove('active');
+        openDriverResponseModal(poolData, parseInt(customPriceInput.value)); // Open driver response modal
+    };
+
+    document.getElementById('book-at-suggested-btn').onclick = function () {
+        modal.classList.remove('active');
+        proceedToPayment(poolData, suggestedPrice); // Proceed with suggested price
+    };
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Function to validate price
+function validatePrice(price, minPrice) {
+    const priceWarning = document.getElementById('price-warning');
+    const warningMessage = document.getElementById('warning-message');
+    const sendPriceRequestBtn = document.getElementById('send-price-request-btn');
+
+    if (price < minPrice) {
+        priceWarning.classList.remove('hidden');
+        warningMessage.textContent = `Price too low. Minimum recommended price is ₹${minPrice}.`;
+        sendPriceRequestBtn.disabled = true;
+        sendPriceRequestBtn.classList.add('disabled');
+    } else {
+        priceWarning.classList.add('hidden');
+        sendPriceRequestBtn.disabled = false;
+        sendPriceRequestBtn.classList.remove('disabled');
+    }
+}
+
+// Function to open driver response modal
+function openDriverResponseModal(poolData, requestedPrice) {
+    const modal = document.getElementById('driver-response-modal');
+    
+    // Set the requested price in the UI
+    document.querySelectorAll('#requested-price-display, #rejected-price-display').forEach(element => {
+        element.textContent = `₹${requestedPrice}`;
+    });
+    
+    // Show loading state
+    showDriverResponseState('loading');
+    
+    // Set counter offer price (for this example, it's higher if user price is too low)
+    const suggestedPrice = poolData.price;
+    const counterOfferPrice = requestedPrice < suggestedPrice * 0.95 ? Math.round(suggestedPrice * 0.95) : requestedPrice;
+    document.getElementById('counter-offer-display').textContent = `₹${counterOfferPrice}`;
+    document.getElementById('accepted-price-display').textContent = `₹${requestedPrice}`;
+    
+    // Simulate driver response after a delay
+    setTimeout(() => {
+        const willAccept = requestedPrice >= suggestedPrice * 0.95;
+        
+        // Show appropriate response state
+        showDriverResponseState(willAccept ? 'accepted' : 'rejected');
+    }, 3000); // 3 second delay to simulate driver response
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Function to show specific state in driver response modal
+function showDriverResponseState(state) {
+    const states = ['loading', 'accepted', 'rejected'];
+    
+    states.forEach(s => {
+        const element = document.getElementById(`driver-response-${s}`);
+        if (element) {
+            if (s === state) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        }
+    });
+    
+    // Start progress bar animation if in loading state
+    if (state === 'loading') {
+        const progressBar = document.querySelector('.timer-progress');
+        if (progressBar) {
+            progressBar.style.width = '0%';
+            progressBar.style.transition = 'width 3s linear';
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 50);
+        }
+    }
+}
+
+// Function to setup driver response modal actions
+function setupDriverResponseModalActions() {
+    // Handle accepted price button
+    const proceedToPaymentBtn = document.getElementById('proceed-to-payment-btn');
+    if (proceedToPaymentBtn) {
+        proceedToPaymentBtn.addEventListener('click', function() {
+            const modal = document.getElementById('driver-response-modal');
+            modal.classList.remove('active');
+            
+            // Get the accepted price from the display
+            const acceptedPrice = parseInt(document.getElementById('accepted-price-display').textContent.replace('₹', ''));
+            proceedToPayment(currentSelectedPool, acceptedPrice);
+        });
+    }
+    
+    // Handle counter offer acceptance
+    const acceptCounterOfferBtn = document.getElementById('accept-counter-offer-btn');
+    if (acceptCounterOfferBtn) {
+        acceptCounterOfferBtn.addEventListener('click', function() {
+            const modal = document.getElementById('driver-response-modal');
+            modal.classList.remove('active');
+            
+            // Get the counter offer price from the display
+            const counterOfferPrice = parseInt(document.getElementById('counter-offer-display').textContent.replace('₹', ''));
+            proceedToPayment(currentSelectedPool, counterOfferPrice);
+        });
+    }
+    
+    // Handle try new price button
+    const tryNewPriceBtn = document.getElementById('try-new-price-btn');
+    if (tryNewPriceBtn) {
+        tryNewPriceBtn.addEventListener('click', function() {
+            const modal = document.getElementById('driver-response-modal');
+            modal.classList.remove('active');
+            openPriceNegotiationModal(currentSelectedPool);
+        });
+    }
+    
+    // Handle find another driver button
+    const findAnotherDriverBtn = document.getElementById('find-another-driver-btn');
+    if (findAnotherDriverBtn) {
+        findAnotherDriverBtn.addEventListener('click', function() {
+            const modal = document.getElementById('driver-response-modal');
+            modal.classList.remove('active');
+            // This would typically redirect to the ride search or home page
+            alert('Finding another driver... This would redirect to search page.');
+        });
+    }
+}
+
+// Proceed to payment
+function proceedToPayment(poolData, finalPrice) {
+    // Check if the payment modal exists
+    const modal = document.getElementById('payment-method-modal');
+    if (!modal) {
+        // Create a simple alert if payment modal doesn't exist in the current implementation
+        alert(`Payment initiated for ₹${finalPrice}. Payment processing would be implemented here.`);
+        return;
+    }
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    document.getElementById('payment-ride-fare').textContent = `₹${finalPrice}`;
+document.getElementById('payment-total-amount').textContent = `₹${finalPrice}`; // Total = Final Price
+
+    document.getElementById('confirm-payment-btn').onclick = function () {
+        modal.classList.remove('active');
+
+        const successModal = document.getElementById('booking-success-modal');
+        successModal.classList.add('active');
+
+        document.getElementById('booking-datetime').textContent = `${poolData.route?.date || '27 Apr, 2025'} - ${poolData.route?.time || '10:00 AM'}`;
+        document.getElementById('booking-amount').textContent = `₹${parseInt(finalPrice) + 20}`;
+
+        const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked')?.nextElementSibling.querySelector('.payment-name')?.innerText;
+        if (selectedPaymentMethod) {
+            document.getElementById('booking-payment-method').textContent = selectedPaymentMethod;
+        }
+
+        document.body.style.overflow = 'hidden';
+    };
+}
+const doneBtn = document.getElementById('close-success-modal');
+if (doneBtn) {
+    doneBtn.onclick = function() {
+        document.getElementById('booking-success-modal').classList.remove('active');
+        document.body.style.overflow = '';
+    };
+}

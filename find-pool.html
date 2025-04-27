@@ -395,25 +395,117 @@
                 </div>
             </div>
             <!-- Price Negotiation Section -->
-<div id="price-negotiation" class="price-negotiation">
-    <h4>Negotiate Price</h4>
-    <p>Suggest your price to the driver</p>
-    <div class="negotiation-slider">
-        <input type="range" id="negotiation-range" min="50" max="300" step="10">
-        <div class="price-labels">
-            <span>₹50</span>
-            <span id="negotiated-price">₹180</span>
-            <span>₹300</span>
+<!-- Price Negotiation Modal -->
+<button id="negotiate-price-btn" class="button secondary">Negotiate Price</button>
+
+<!-- Price Negotiation Modal -->
+<div id="price-negotiation-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Name Your Price</h3>
+            <button class="close-modal" aria-label="Close modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
-    </div>
-    <div class="negotiation-actions">
-        <button id="send-offer-btn" class="button primary">Send Offer</button>
-        <button id="book-now-btn" class="button secondary">Book at Original Price</button>
+        <div class="modal-body">
+            <div class="ride-summary">
+                <div class="route-summary">
+                    <div class="route-points">
+                        <div class="route-point">
+                            <div class="route-point-icon pickup">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="4" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="route-point-details">
+                                <div class="route-point-label">Pickup</div>
+                                <div id="negotiation-pickup" class="route-point-value">Loading...</div>
+                            </div>
+                        </div>
+                        <div class="route-line"></div>
+                        <div class="route-point">
+                            <div class="route-point-icon dropoff">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="12" cy="10" r="3" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="route-point-details">
+                                <div class="route-point-label">Dropoff</div>
+                                <div id="negotiation-dropoff" class="route-point-value">Loading...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ride-details">
+                        <div class="ride-detail">
+                            <span class="detail-label">Distance</span>
+                            <span id="negotiation-distance" class="detail-value">-- km</span>
+                        </div>
+                        <div class="ride-detail">
+                            <span class="detail-label">Duration</span>
+                            <span id="negotiation-duration" class="detail-value">-- min</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="price-input-section">
+                    <div class="suggested-price">
+                        <div class="suggested-price-label">Suggested Price</div>
+                        <div id="suggested-price" class="suggested-price-value">₹180</div>
+                    </div>
+                    
+                    <div class="your-price">
+                        <div class="your-price-label">Your Price</div>
+                        <div class="price-input-container">
+                            <span class="currency-symbol">₹</span>
+                            <input type="number" id="custom-price-input" min="1" step="5" placeholder="Enter your price">
+                        </div>
+                    </div>
+                    
+                    <div class="price-warning hidden" id="price-warning">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="12" cy="16" r="1" fill="currentColor"/>
+                        </svg>
+                        <span id="warning-message">Price too low. Minimum recommended price is ₹150.</span>
+                    </div>
+                    
+                    <div class="quick-price-options">
+                        <button class="quick-price-btn" data-price-factor="0.9">-10%</button>
+                        <button class="quick-price-btn" data-price-factor="0.95">-5%</button>
+                        <button class="quick-price-btn active" data-price-factor="1">Suggested</button>
+                        <button class="quick-price-btn" data-price-factor="1.05">+5%</button>
+                        <button class="quick-price-btn" data-price-factor="1.1">+10%</button>
+                    </div>
+                </div>
+                
+                <div class="negotiation-info">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="12" cy="8" r="1" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <p>Drivers are more likely to accept your ride request if your price is fair. Lower prices may result in longer wait times.</p>
+                </div>
+            </div>
+            
+            <div class="negotiation-actions">
+                <button id="send-price-request-btn" class="button primary">Send Price Request</button>
+                <button id="book-at-suggested-btn" class="button secondary">Book at Suggested Price</button>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- Negotiation Response Modal -->
-<div id="negotiation-response-modal" class="modal">
+<!-- Driver Response Modal -->
+<div id="driver-response-modal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Driver Response</h3>
@@ -425,18 +517,36 @@
             </button>
         </div>
         <div class="modal-body">
-            <div id="negotiation-accepted" class="negotiation-response">
+            <!-- Loading State -->
+            <div id="driver-response-loading" class="response-state">
+                <div class="loading-animation">
+                    <div class="loading-spinner"></div>
+                </div>
+                <h3>Waiting for driver response...</h3>
+                <p>Your price request of <span id="requested-price-display">₹160</span> has been sent to the driver.</p>
+                <div class="response-timer">
+                    <div class="timer-bar">
+                        <div class="timer-progress"></div>
+                    </div>
+                    <span>Driver will respond shortly</span>
+                </div>
+            </div>
+            
+            <!-- Accepted State -->
+            <div id="driver-response-accepted" class="response-state hidden">
                 <div class="response-icon accepted">
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h3>Offer Accepted!</h3>
-                <p>The driver has accepted your price offer. You can now proceed with booking.</p>
-                <button id="proceed-with-negotiated-price" class="button primary">Proceed to Payment</button>
+                <h3>Price Accepted!</h3>
+                <p>The driver has accepted your price of <span id="accepted-price-display">₹160</span>.</p>
+                <button id="proceed-to-payment-btn" class="button primary">Proceed to Payment</button>
             </div>
-            <div id="negotiation-rejected" class="negotiation-response">
+            
+            <!-- Rejected State -->
+            <div id="driver-response-rejected" class="response-state hidden">
                 <div class="response-icon rejected">
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -444,15 +554,16 @@
                         <path d="M9 9L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h3>Offer Rejected</h3>
-                <p>The driver has rejected your price offer. You can try a different price or book at the original price.</p>
-                <div class="counter-offer" id="counter-offer-section">
-                    <p>Driver's counter offer: <span id="counter-offer-price">₹160</span></p>
+                <h3>Price Rejected</h3>
+                <p>The driver has rejected your price of <span id="rejected-price-display">₹120</span>.</p>
+                <div class="counter-offer">
+                    <p>Driver's counter offer: <span id="counter-offer-display">₹160</span></p>
                     <div class="counter-offer-actions">
-                        <button id="accept-counter-offer" class="button primary">Accept Counter Offer</button>
-                        <button id="reject-counter-offer" class="button secondary">Reject</button>
+                        <button id="accept-counter-offer-btn" class="button primary">Accept Counter Offer</button>
+                        <button id="try-new-price-btn" class="button secondary">Try New Price</button>
                     </div>
                 </div>
+                <button id="find-another-driver-btn" class="button text">Find Another Driver</button>
             </div>
         </div>
     </div>
@@ -538,9 +649,9 @@
                                 <span>Ride Fare</span>
                                 <span id="payment-ride-fare">₹180</span>
                             </div>
-                            <div class="summary-item">
+                            <!-- <div class="summary-item">
                                 <span>Service Fee</span>
-                                <span>₹20</span>
+                                <span>₹20</span> -->
                             </div>
                             <div class="summary-item total">
                                 <span>Total Amount</span>
