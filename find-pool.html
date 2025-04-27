@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <meta name="description" content="Find and book shared rides with Pool Mate - the smart carpooling platform">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 </head>
 
 <body class="light-mode">
@@ -423,87 +425,17 @@
                 </div>
 
                 <!-- Map View -->
-                <div id="map-view" class="map-view hidden">
-                    <div class="map-container">
-                        <!-- Mock Map -->
-                        <div class="mock-map">
-                            <div class="map-overlay">
-                                <div class="map-pin" data-id="pool-1" style="top: 40%; left: 30%;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                                            fill="var(--accent-color)" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <circle cx="12" cy="10" r="3" fill="white" stroke="currentColor"
-                                            stroke-width="2" />
-                                    </svg>
-                                </div>
-                                <div class="map-pin" data-id="pool-2" style="top: 35%; left: 55%;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                                            fill="var(--accent-color)" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <circle cx="12" cy="10" r="3" fill="white" stroke="currentColor"
-                                            stroke-width="2" />
-                                    </svg>
-                                </div>
-                                <div class="map-pin" data-id="pool-3" style="top: 60%; left: 45%;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                                            fill="var(--accent-color)" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <circle cx="12" cy="10" r="3" fill="white" stroke="currentColor"
-                                            stroke-width="2" />
-                                    </svg>
-                                </div>
-                                <div class="map-pin" data-id="pool-4" style="top: 50%; left: 70%;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                                            fill="var(--accent-color)" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <circle cx="12" cy="10" r="3" fill="white" stroke="currentColor"
-                                            stroke-width="2" />
-                                    </svg>
-                                </div>
-                                <div class="map-pin" data-id="pool-5" style="top: 25%; left: 40%;">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                                            fill="var(--accent-color)" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" />
-                                        <circle cx="12" cy="10" r="3" fill="white" stroke="currentColor"
-                                            stroke-width="2" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="map-list-view" class="map-list-view">
-                            <!-- Selected pool details will appear here -->
-                            <div class="map-info-empty">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                    <path
-                                        d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                                <p>Select a pin on the map to view ride details</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Map View -->
+<div id="map-view" class="map-view hidden">
+    <div class="map-container">
+        <div id="map" style="height: 100%; width: 100%;"></div> <!-- Ye naya map div -->
+        
+        <div id="map-list-view" class="map-list-view">
+            <!-- Selected pool details will appear here -->
+        </div>
+    </div>
+</div>
+
 
                 <!-- No Results State -->
                 <div id="no-results" class="no-results hidden">
@@ -1085,6 +1017,132 @@
                 console.log('User entered address manually: ', query);
             }
         });
+
+
+// Map View Initialize karne ka code
+document.addEventListener('DOMContentLoaded', function () {
+    const mapViewBtn = document.getElementById('map-view-btn');
+    const listViewBtn = document.getElementById('list-view-btn');
+    const mapContainer = document.getElementById('map-view');
+    const searchForm = document.getElementById('search-form');
+    let map;
+    let mapInitialized = false;
+
+    mapViewBtn.addEventListener('click', async function () {
+        mapContainer.classList.remove('hidden');
+        document.getElementById('list-view').classList.add('hidden');
+
+        if (!mapInitialized) {
+            // Get current location of the user
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const userLat = position.coords.latitude;
+                    const userLon = position.coords.longitude;
+
+                    // Initialize map with user's location
+                    map = L.map('map').setView([userLat, userLon], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
+                    mapInitialized = true;
+                }, function() {
+                    // If geolocation fails, default to Delhi
+                    map = L.map('map').setView([28.6139, 77.2090], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
+                    mapInitialized = true;
+                });
+            } else {
+                // If geolocation is not supported, default to Delhi
+                map = L.map('map').setView([28.6139, 77.2090], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+                mapInitialized = true;
+            }
+        }
+
+        // Get pickup and drop values from form
+        const pickupLocation = document.getElementById('pickup-location').value.trim();
+        const dropLocation = document.getElementById('drop-location').value.trim();
+
+        if (!pickupLocation || !dropLocation) {
+            alert('Please enter pickup and drop location first!');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/search-rides?startingPoint=${encodeURIComponent(pickupLocation)}&destinationPoint=${encodeURIComponent(dropLocation)}`);
+            const rides = await response.json();
+
+            map.eachLayer(function (layer) {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            const carIcon = L.icon({
+                iconUrl: '/car.png', // This is a car icon
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+                popupAnchor: [0, -40]
+            });
+
+            if (rides.length === 0) {
+                alert('No rides found for this route.');
+                return;
+            }
+
+            // Before loop
+            let bounds = [];
+
+            rides.forEach(async function (ride) {
+                // Geocode pickup address
+                const geoResponse = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(ride.startingPoint)}&format=json`);
+                const geoData = await geoResponse.json();
+
+                if (geoData && geoData.length > 0) {
+                    const { lat, lon } = geoData[0];
+
+                    // Add marker
+                    L.marker([lat, lon], { icon: carIcon })
+                        .addTo(map)
+                        .bindPopup(`
+                            <b>Driver:</b> ${ride.driverName}<br>
+                            <b>From:</b> ${ride.startingPoint}<br>
+                            <b>To:</b> ${ride.destinationPoint}<br>
+                            <b>Date:</b> ${ride.journeyDate}<br>
+                            <b>Time:</b> ${ride.journeyTime}
+                        `);
+
+                    // Push lat/lon to bounds array
+                    bounds.push([lat, lon]);
+
+                    // After last ride, adjust map view
+                    if (bounds.length === rides.length) {
+                        const boundsLatLng = L.latLngBounds(bounds);
+                        map.fitBounds(boundsLatLng, { padding: [50, 50] }); // Zoom and center map to rides
+                    }
+                }
+            });
+
+        } catch (error) {
+            console.error('❌ Error fetching rides:', error);
+        }
+
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 200);
+    });
+
+    listViewBtn.addEventListener('click', function () {
+        mapContainer.classList.add('hidden');
+        document.getElementById('list-view').classList.remove('hidden');
+    });
+});
+
+
 
     </script>
 
