@@ -1123,12 +1123,19 @@ function proceedToPayment(poolData, finalPrice) {
         document.body.style.overflow = 'hidden';
     };
 }
-document.addEventListener('DOMContentLoaded', function () {
-    const doneBtn = document.getElementById('close-success-modal');
-    if (doneBtn) {
-        doneBtn.onclick = function () {
-            document.getElementById('booking-success-modal').classList.remove('active');
-            document.body.style.overflow = '';
-        };
-    }
-});
+const doneBtn = document.getElementById('close-success-modal');
+if (doneBtn) {
+    doneBtn.onclick = function () {
+        successModal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+}
+
+const viewBookingsBtn = document.getElementById('view-bookings-btn');
+if (viewBookingsBtn) {
+    viewBookingsBtn.onclick = function () {
+        alert('Feature coming soon: View your bookings!');
+        successModal.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+}
