@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', function () {
         modalElements.forEach((el, index) => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(20px)';
-            
+
             setTimeout(() => {
                 el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                 el.style.opacity = '1';
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const modalContent = document.querySelector('.modal-content');
         modalContent.style.transform = 'translateY(50px) scale(0.95)';
         modalContent.style.opacity = '0';
-        
+
         setTimeout(() => {
             rideDetailsModal.classList.remove('active');
             document.body.style.overflow = ''; // Re-enable scrolling
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function () {
         errorDiv.style.transform = 'translateY(-20px)';
 
         document.querySelector('.container').prepend(errorDiv);
-        
+
         // Trigger animation
         setTimeout(() => {
             errorDiv.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
         setTimeout(() => {
             errorDiv.style.opacity = '0';
             errorDiv.style.transform = 'translateY(-20px)';
-            
+
             setTimeout(() => {
                 errorDiv.remove();
             }, 300);
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function (e) {
             e.stopPropagation();
             const filterOptions = this.nextElementSibling;
-            
+
             if (!filterOptions.classList.contains('active')) {
                 // Prepare for animation
                 const options = filterOptions.querySelectorAll('.filter-option');
@@ -346,10 +346,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     option.style.opacity = '0';
                     option.style.transform = 'translateY(-10px)';
                 });
-                
+
                 // Show dropdown
                 filterOptions.classList.add('active');
-                
+
                 // Animate options
                 options.forEach((option, index) => {
                     setTimeout(() => {
@@ -369,13 +369,13 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.filter-options').forEach(dropdown => {
             if (dropdown.classList.contains('active')) {
                 const options = dropdown.querySelectorAll('.filter-option');
-                
+
                 // Animate options out
                 options.forEach((option, index) => {
                     option.style.opacity = '0';
                     option.style.transform = 'translateY(-10px)';
                 });
-                
+
                 // Hide dropdown after animation
                 setTimeout(() => {
                     dropdown.classList.remove('active');
@@ -397,11 +397,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const filterText = this.textContent;
             const filterBtn = this.closest('.filter-dropdown').querySelector('.filter-btn');
             const filterOptions = this.closest('.filter-options');
-            
+
             // Add visual feedback
             this.style.backgroundColor = 'var(--accent-color)';
             this.style.color = 'white';
-            
+
             // Update filter button text with animation
             filterBtn.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -409,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </svg>
                 ${filterText}
             `;
-            
+
             // Animate button
             filterBtn.style.transform = 'scale(1.05)';
             setTimeout(() => {
@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     opt.style.transform = 'translateY(-10px)';
                 }
             });
-            
+
             setTimeout(() => {
                 filterOptions.classList.remove('active');
                 // Reset styles
@@ -438,14 +438,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Here you would implement the actual filtering logic
             console.log(`Filtering by: ${filterText}`);
-            
+
             // Add visual feedback for filtered content
             const rideCards = document.querySelectorAll('.ride-card');
             rideCards.forEach(card => {
                 card.style.opacity = '0.5';
                 card.style.transform = 'scale(0.98)';
             });
-            
+
             setTimeout(() => {
                 rideCards.forEach((card, index) => {
                     setTimeout(() => {
@@ -477,18 +477,18 @@ document.addEventListener('DOMContentLoaded', function () {
             // Add gradient and shadow for enhanced look
             barFill.style.background = 'linear-gradient(to top, var(--accent-color), #6d8dff)';
             barFill.style.boxShadow = '0 0 10px rgba(67, 97, 238, 0.3)';
-            
+
             // Animate height with easing
             setTimeout(() => {
                 barFill.style.transition = 'height 1s cubic-bezier(0.34, 1.56, 0.64, 1)';
                 barFill.style.height = `${heightPercentage}%`;
-                
+
                 // Add label animation
                 const label = bar.querySelector('.bar-label');
                 if (label) {
                     label.style.opacity = '0';
                     label.style.transform = 'translateY(10px)';
-                    
+
                     setTimeout(() => {
                         label.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                         label.style.opacity = '1';
@@ -511,13 +511,13 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             // Skip if already active
             if (this.classList.contains('active')) return;
-            
+
             // Deactivate all buttons with animation
             periodButtons.forEach(btn => {
                 if (btn.classList.contains('active')) {
                     btn.style.transform = 'scale(0.95)';
                     btn.style.opacity = '0.7';
-                    
+
                     setTimeout(() => {
                         btn.classList.remove('active');
                         btn.style.transform = '';
@@ -525,7 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }, 200);
                 }
             });
-            
+
             // Activate clicked button with animation
             this.style.transform = 'scale(1.05)';
             setTimeout(() => {
@@ -541,12 +541,12 @@ document.addEventListener('DOMContentLoaded', function () {
             if (chartContainer) {
                 chartContainer.style.opacity = '0.5';
                 chartContainer.style.transform = 'scale(0.98)';
-                
+
                 setTimeout(() => {
                     chartContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     chartContainer.style.opacity = '1';
                     chartContainer.style.transform = 'scale(1)';
-                    
+
                     // Re-animate chart
                     animateChartBars();
                 }, 300);
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const viewDetailsButtons = document.querySelectorAll('.btn-view-details');
     const closeModalButton = document.querySelector('.close-modal');
     const rideDetailsModal2 = document.getElementById('ride-details-modal');
-    
+
     viewDetailsButtons.forEach(button => {
         button.addEventListener('click', function () {
             // Add click animation
@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(() => {
                 this.style.transform = '';
             }, 200);
-            
+
             const rideId = this.getAttribute('data-ride-id');
             const offerId = this.getAttribute('data-offer-id');
 
@@ -581,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Show modal with enhanced animation
             rideDetailsModal2.style.backdropFilter = 'blur(0px)';
             rideDetailsModal2.classList.add('active');
-            
+
             setTimeout(() => {
                 rideDetailsModal2.style.transition = 'backdrop-filter 0.5s ease';
                 rideDetailsModal2.style.backdropFilter = 'blur(5px)';
@@ -596,7 +596,7 @@ document.addEventListener('DOMContentLoaded', function () {
     closeModalButton.addEventListener('click', function () {
         // Add click animation
         this.style.transform = 'rotate(90deg)';
-        
+
         closeModal();
     });
 
@@ -831,13 +831,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update rating stars
             updateRatingStars(ride.rating);
-            
+
             // Add animation to modal elements
             const elements = modalBody.querySelectorAll('> *');
             elements.forEach((el, index) => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
-                
+
                 setTimeout(() => {
                     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     el.style.opacity = '1';
@@ -1034,13 +1034,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update rating stars
             updateRatingStars(offer.rating);
-            
+
             // Add animation to modal elements
             const elements = modalBody.querySelectorAll('> *');
             elements.forEach((el, index) => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
-                
+
                 setTimeout(() => {
                     el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     el.style.opacity = '1';
@@ -1053,7 +1053,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Enhanced rating stars with animation
     function updateRatingStars(rating) {
         const starsContainers = document.querySelectorAll('.stars');
-        
+
         starsContainers.forEach(starsContainer => {
             starsContainer.innerHTML = '';
 
@@ -1070,7 +1070,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 starsContainer.appendChild(star);
-                
+
                 // Animate stars appearing one by one
                 setTimeout(() => {
                     star.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
@@ -1082,7 +1082,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const ratingText = starsContainer.nextElementSibling;
             if (ratingText) {
                 ratingText.style.opacity = '0';
-                
+
                 setTimeout(() => {
                     ratingText.style.transition = 'opacity 0.5s ease';
                     ratingText.style.opacity = '1';
@@ -1117,13 +1117,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 animateChartBars();
             }, 300);
         }
-        
+
         // Add subtle entrance animation to profile card
         const profileCard = document.querySelector('.profile-card');
         if (profileCard) {
             profileCard.style.opacity = '0';
             profileCard.style.transform = 'translateY(20px)';
-            
+
             setTimeout(() => {
                 profileCard.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
                 profileCard.style.opacity = '1';
@@ -1143,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, 100);
     });
-    
+
     // Add loading spinner CSS
     const style = document.createElement('style');
     style.textContent = `
@@ -1180,3 +1180,331 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     document.head.appendChild(style);
 });
+
+// Add these functions at the end of your document.addEventListener("DOMContentLoaded", function() {...}) block
+
+// Fetch and display trip notifications (bookings)
+async function fetchTripNotifications() {
+    try {
+        // Get the current user's ID (from localStorage or session)
+        const userId = localStorage.getItem("userId") || "Alex Johnson"; // Default to Alex Johnson if not found
+
+        const response = await fetch(`/bookings/${userId}`);
+        if (!response.ok) {
+            throw new Error("Failed to fetch trip notifications");
+        }
+
+        const data = await response.json();
+        if (data.success && data.bookings) {
+            displayTripNotifications(data.bookings);
+        } else {
+            console.error("Error in booking data format:", data);
+        }
+    } catch (error) {
+        console.error("Error fetching trip notifications:", error);
+        showErrorMessage("Failed to load trip notifications. Please try again later.");
+    }
+}
+
+// Display trip notifications in the UI
+function displayTripNotifications(bookings) {
+    // Create the Trip Notifications section if it doesn't exist
+    let tripNotificationsSection = document.getElementById("trip-notifications-section");
+
+    if (!tripNotificationsSection) {
+        // Create the section
+        const ridesTakenPane = document.getElementById("rides-taken");
+
+        tripNotificationsSection = document.createElement("div");
+        tripNotificationsSection.id = "trip-notifications-section";
+        tripNotificationsSection.className = "trip-notifications-section";
+
+        // Create section header
+        const sectionHeader = document.createElement("div");
+        sectionHeader.className = "section-title";
+        sectionHeader.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+        </svg>
+        <h4>Trip Notifications</h4>
+      `;
+
+        // Create container for booking cards
+        const bookingsContainer = document.createElement("div");
+        bookingsContainer.id = "bookings-container";
+        bookingsContainer.className = "ride-cards";
+
+        // Append elements
+        tripNotificationsSection.appendChild(sectionHeader);
+        tripNotificationsSection.appendChild(bookingsContainer);
+
+        // Insert the section after the best-rated-section
+        const bestRatedSection = ridesTakenPane.querySelector(".best-rated-section");
+        bestRatedSection.after(tripNotificationsSection);
+    }
+
+    // Get the bookings container
+    const bookingsContainer = document.getElementById("bookings-container");
+    bookingsContainer.innerHTML = ""; // Clear existing bookings
+
+    if (bookings.length === 0) {
+        bookingsContainer.innerHTML = '<div class="no-bookings">No trip notifications found.</div>';
+        return;
+    }
+
+    // Create booking cards
+    bookings.forEach((booking, index) => {
+        const bookingCard = createBookingCard(booking, index);
+        bookingsContainer.appendChild(bookingCard);
+    });
+
+    // Animate the cards
+    animateBookingCards();
+}
+
+// Create a booking card element
+function createBookingCard(booking, index) {
+    const card = document.createElement("div");
+    card.className = "ride-card booking-card";
+    card.style.animationDelay = `${index * 0.1}s`;
+
+    // Format the date
+    const bookingDate = new Date(booking.createdAt);
+    const formattedDate = bookingDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    });
+
+    // Format the time
+    const formattedTime = bookingDate.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    // Format the price
+    const formattedPrice = Number.parseFloat(booking.amount).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2
+    });
+
+    card.innerHTML = `
+      <div class="ride-card-header">
+        <div class="route">
+          <div class="location">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>${booking.pickupLocation}</span>
+          </div>
+          <div class="route-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
+          <div class="location">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>${booking.dropLocation}</span>
+          </div>
+        </div>
+        <div class="booking-status">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          <span>Confirmed</span>
+        </div>
+      </div>
+      <div class="ride-card-body">
+        <div class="ride-info">
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>${formattedDate}</span>
+          </div>
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>${formattedTime}</span>
+          </div>
+          <div class="info-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <span>${formattedPrice}</span>
+          </div>
+        </div>
+        <div class="driver-info-compact">
+          <div class="driver-avatar-small">${booking.driverName.split(" ").map(n => n[0]).join("")}</div>
+          <div class="driver-details-small">
+            <div class="driver-name-small">${booking.driverName}</div>
+            <div class="car-info-small">${booking.carName}</div>
+          </div>
+        </div>
+      </div>
+      <div class="ride-card-footer">
+        <button class="btn-view-details" data-booking-id="${booking._id}">
+          View Details
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    `;
+
+    // Add click event to view details button
+    const viewDetailsBtn = card.querySelector(".btn-view-details");
+    viewDetailsBtn.addEventListener("click", () => openBookingDetailsModal(booking));
+
+    return card;
+}
+
+// Animate booking cards
+function animateBookingCards() {
+    const cards = document.querySelectorAll(".booking-card");
+    cards.forEach((card, index) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(20px)";
+
+        setTimeout(() => {
+            card.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+        }, index * 100);
+    });
+}
+
+// Open booking details modal
+function openBookingDetailsModal(booking) {
+    const modal = document.getElementById("ride-details-modal");
+
+    // Update modal content with booking details
+    document.getElementById("detail-start").textContent = booking.pickupLocation;
+    document.getElementById("detail-destination").textContent = booking.dropLocation;
+
+    // Format date and time
+    const bookingDate = new Date(booking.createdAt);
+    const formattedDate = bookingDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    });
+    const formattedTime = bookingDate.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    document.getElementById("detail-date").textContent = formattedDate;
+    document.getElementById("detail-time").textContent = formattedTime;
+
+    // Format price
+    const formattedPrice = Number.parseFloat(booking.amount).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2
+    });
+    document.getElementById("detail-fare").textContent = formattedPrice;
+
+    // Driver and vehicle details
+    document.getElementById("detail-driver-name").textContent = booking.driverName;
+    document.getElementById("detail-vehicle-name").textContent = booking.carName;
+
+    // Show modal with enhanced animation
+    modal.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+// Add CSS for Trip Notifications section
+function addTripNotificationsStyles() {
+    const style = document.createElement("style");
+    style.textContent = `
+      .trip-notifications-section {
+        margin-bottom: 2rem;
+      }
+      
+      .booking-card {
+        border-left: 4px solid var(--accent-color);
+      }
+      
+      .booking-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        background: rgba(16, 185, 129, 0.1);
+        padding: 0.5rem 0.75rem;
+        border-radius: 20px;
+        color: #10b981;
+        margin-top: 0.5rem;
+      }
+      
+      .driver-info-compact {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        padding: 0.75rem;
+        background: var(--input-background);
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+      }
+      
+      .driver-info-compact:hover {
+        transform: translateY(-3px);
+      }
+      
+      .driver-avatar-small {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--accent-color), #6d8dff);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+      }
+      
+      .driver-details-small {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .driver-name-small {
+        font-weight: 600;
+        color: var(--text-color);
+      }
+      
+      .car-info-small {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+      
+      .no-bookings {
+        padding: 2rem;
+        text-align: center;
+        color: var(--text-secondary);
+        background: var(--input-background);
+        border-radius: var(--border-radius);
+        font-style: italic;
+      }
+    `;
+    document.head.appendChild(style);
+}
+
+// Call these functions to initialize trip notifications
+addTripNotificationsStyles();
+fetchTripNotifications();

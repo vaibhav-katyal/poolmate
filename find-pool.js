@@ -626,6 +626,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const bookNowButton = document.getElementById('book-now-btn');
         bookNowButton.addEventListener('click', function () {
             rideModal.classList.remove('active');
+            const userName = localStorage.getItem("userName") || "Alex Johnson";
+
+            const bookingData = {
+                amount: poolData.price,
+                driverName: poolData.driver.name,
+                userName: userName,
+                carName: poolData.vehicle.model,
+                pickupLocation: poolData.route.pickup,
+                dropLocation: poolData.route.drop
+            };
+
+            // Send booking data to server
+            saveBooking(bookingData);
 
             // Open Payment Modal
             const paymentModal = document.getElementById('payment-method-modal');
@@ -672,6 +685,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 // Add this to your existing JavaScript file
+
+async function saveBooking(bookingData) {
+    try {
+        const response = await fetch("/bookings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(bookingData)
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to save booking");
+        }
+
+        const data = await response.json();
+        console.log("Booking saved successfully:", data);
+    } catch (error) {
+        console.error("Error saving booking:", error);
+    }
+}
 
 // Function to generate pool cards with negotiable badge
 function generatePoolCard(pool) {

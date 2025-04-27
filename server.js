@@ -1,4 +1,3 @@
-// -------- IMPORTS --------
 const express = require('express');
 const http = require('http');
 const mongoose = require('mongoose');
@@ -11,10 +10,10 @@ const { Server } = require('socket.io');
 
 // -------- CONFIGS --------
 dotenv.config();
-const app = express(); // ✅ app first
+const app = express();
 const PORT = 3000;
-const server = http.createServer(app); // ✅ create server after app
-const io = new Server(server); // ✅ bind io with server
+const server = http.createServer(app);
+const io = new Server(server);
 const activeUsers = new Map();
 
 // -------- MONGODB CONNECT --------
@@ -84,6 +83,18 @@ const negotiationSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 const Negotiation = mongoose.model('Negotiation', negotiationSchema);
+
+// New Booking Schema
+const bookingSchema = new mongoose.Schema({
+    amount: Number,
+    driverName: String,
+    userName: String,
+    carName: String,
+    pickupLocation: String,
+    dropLocation: String,
+    createdAt: { type: Date, default: Date.now }
+});
+const Booking = mongoose.model('Booking', bookingSchema);
 
 // -------- SOCKET.IO HANDLERS --------
 io.on('connection', (socket) => {
@@ -262,6 +273,59 @@ app.post('/api/negotiate', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Negotiation failed" });
+    }
+});
+
+// New route to save a booking
+app.post('/bookings', async (req, res) => {
+    try {
+        const { amount, driverName, userName, carName, pickupLocation, dropLocation } = req.body;
+        
+        // Validate required fields
+        if (!amount || !driverName || !userName || !carName || !pickupLocation || !dropLocation) {
+            return res.status(400).json({ message: 'All fields are required' });
+        }
+        
+        // Create new booking
+        const newBooking = new Booking({
+            amount,
+            driverName,
+            userName,
+            carName,
+            pickupLocation,
+            dropLocation
+        });
+        
+        // Save to database
+        await newBooking.save();
+        
+        res.status(201).json({ 
+            success: true, 
+            message: 'Booking created successfully', 
+            booking: newBooking 
+        });
+    } catch (error) {
+        console.error('❌ Error creating booking:', error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+});
+
+// New route to get bookings for a specific user
+app.get('/bookings/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params;
+        
+        // Find all bookings for this user
+        const bookings = await Booking.find({ userName: userId })
+            .sort({ createdAt: -1 }); // Sort by newest first
+        
+        res.status(200).json({ 
+            success: true, 
+            bookings 
+        });
+    } catch (error) {
+        console.error('❌ Error fetching bookings:', error);
+        res.status(500).json({ success: false, message: 'Server Error' });
     }
 });
 
