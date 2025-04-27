@@ -2,48 +2,75 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv');
-const app = express();
+const cloudinary = require('cloudinary').v2;
+const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 dotenv.config();
 
+const app = express();
 const PORT = 3000;
+
+// Cloudinary Config
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Multer Storage
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'Poolmate',
+        allowed_formats: ['jpg', 'jpeg', 'png']
+    }
+});
+const upload = multer({ storage: storage });
+
+// Mongoose Connect
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('✅ MongoDB Connected Successfully'))
+    .catch((err) => console.error('❌ MongoDB Connection Error:', err));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('✅ MongoDB Connected Successfully'))
-.catch((err) => console.error('❌ MongoDB Connection Error:', err));
-
 app.use(express.static(path.join(__dirname)));
 
-// Define User model here
+// User Model
 const userSchema = new mongoose.Schema({
-    fullName: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true // email ek hi baar allowed
-    },
-    password: {
-        type: String,
-        default: null // Google login wale users ka password nahi hoga
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+    fullName: String,
+    email: String,
+    password: { type: String, default: null },
+    createdAt: { type: Date, default: Date.now }
 });
-
 const User = mongoose.model('User', userSchema);
 
-// Create or Check User API
+// Ride Offer Model
+const rideOfferSchema = new mongoose.Schema({
+    driverName: String,
+    startingPoint: String,
+    destinationPoint: String,
+    journeyDate: String,
+    journeyTime: String,
+    vehicleType: String,
+    seatingCapacity: String,
+    availableSeats: String,
+    seatPrice: String,
+    additionalNote: String,
+    vehicleName: String,
+    vehicleBrand: String,
+    vehicleModel: String,
+    vehicleColor: String,
+    numberPlate: String,
+    vehicleImage: String,
+    licenseImage: String,
+    driverPhoto: String,
+    createdAt: { type: Date, default: Date.now }
+});
+const RideOffer = mongoose.model('RideOffer', rideOfferSchema);
+
+// Auth Google API
 app.post('/api/auth/google', async (req, res) => {
     const { fullName, email } = req.body;
 
@@ -51,7 +78,6 @@ app.post('/api/auth/google', async (req, res) => {
         let user = await User.findOne({ email });
 
         if (!user) {
-            // Naya user create kar
             user = new User({ fullName, email });
             await user.save();
             console.log('✅ New Google User created:', fullName);
@@ -66,7 +92,46 @@ app.post('/api/auth/google', async (req, res) => {
     }
 });
 
-// Server Listen
+// 🚀 NEW API: Offer Ride
+app.post('/api/offer', upload.fields([
+    { name: 'vehicleImage', maxCount: 1 },
+    { name: 'licenseImage', maxCount: 1 },
+    { name: 'driverPhoto', maxCount: 1 }
+]), async (req, res) => {
+    try {
+        const { body, files } = req;
+
+        const newOffer = new RideOffer({
+            driverName: body.driverName,
+            startingPoint: body.startingPoint,
+            destinationPoint: body.destinationPoint,
+            journeyDate: body.journeyDate,
+            journeyTime: body.journeyTime,
+            vehicleType: body.vehicleType,
+            seatingCapacity: body.seatingCapacity,
+            availableSeats: body.availableSeats,
+            seatPrice: body.seatPrice,
+            additionalNote: body.additionalNote,
+            vehicleName: body.vehicleName,
+            vehicleBrand: body.vehicleBrand,
+            vehicleModel: body.vehicleModel,
+            vehicleColor: body.vehicleColor,
+            numberPlate: body.numberPlate,
+            vehicleImage: files.vehicleImage ? files.vehicleImage[0].path : '',
+            licenseImage: files.licenseImage ? files.licenseImage[0].path : '',
+            driverPhoto: files.driverPhoto ? files.driverPhoto[0].path : ''
+        });
+
+        await newOffer.save();
+        res.status(201).json({ message: 'Offer Created Successfully 🚀' });
+
+    } catch (error) {
+        console.error('❌ Error creating offer:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+// Server Start
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
